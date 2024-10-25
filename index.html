@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Cast Music Receiver</title>
+    <script src="https://www.gstatic.com/cast/sdk/libs/caf_receiver/v3/cast_receiver_framework.js"></script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            background-color: #333;
+            color: white;
+        }
+        #album-art {
+            max-width: 100%;
+            height: auto;
+            margin: 20px auto;
+            border-radius: 8px;
+        }
+        #controls {
+            margin-top: 20px;
+        }
+        button {
+            font-size: 18px;
+            padding: 10px 20px;
+            background-color: #ff5722;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #e64a19;
+        }
+    </style>
+</head>
+<body>
+    <h1>Now Playing</h1>
+    <img id="album-art" src="" alt="Album Art">
+    <div id="controls">
+        <button id="pause-button">Pause</button>
+    </div>
+
+    <script>
+        // Initialize Cast Receiver Framework
+        const context = cast.framework.CastReceiverContext.getInstance();
+        const playerManager = context.getPlayerManager();
+
+        // Set up the pause button action
+        const pauseButton = document.getElementById("pause-button");
+        pauseButton.addEventListener("click", () => {
+            if (playerManager.getPlayerState() === cast.framework.messages.PlayerState.PAUSED) {
+                playerManager.play();
+                pauseButton.textContent = "Pause";
+            } else {
+                playerManager.pause();
+                pauseButton.textContent = "Play";
+            }
+        });
+
+        // Update the UI when media is loaded
+        playerManager.addEventListener(cast.framework.events.EventType.MEDIA_STATUS, (event) => {
+            const mediaInfo = event.media || {};
+            const albumArt = document.getElementById("album-art");
+            
+            if (mediaInfo.metadata && mediaInfo.metadata.images && mediaInfo.metadata.images.length > 0) {
+                albumArt.src = mediaInfo.metadata.images[0].url;
+            } else {
+                albumArt.src = ""; // Fallback image URL if no image found
+            }
+
+            if (playerManager.getPlayerState() === cast.framework.messages.PlayerState.PAUSED) {
+                pauseButton.textContent = "Play";
+            } else {
+                pauseButton.textContent = "Pause";
+            }
+        });
+
+        // Start the receiver
+        context.start();
+    </script>
+</body>
+</html>
