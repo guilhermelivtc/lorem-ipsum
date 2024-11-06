@@ -127,12 +127,12 @@
         const nameSpace = "urn:x-cast:innuos.innuossense.com"
 
         // Add a custom message listener for the namespace
-        context.addCustomMessageListener(namespace, (event) => {
-            console.log('Received message:', event.data);
+        context.addCustomMessageListener(nameSpace, (customEvent) => {
+            console.log('Received message:', customEvent.data);
 
             // Display the received message on the page (optional)
             const messageDisplay = document.createElement('p');
-            messageDisplay.textContent = 'Message from sender: ' + JSON.stringify(event.data);
+            messageDisplay.textContent = 'Message from sender: ' + JSON.stringify(customEvent.data);
             document.body.appendChild(messageDisplay);
 
             // Additional handling of the message can go here
