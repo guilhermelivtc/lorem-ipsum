@@ -113,6 +113,11 @@
         <i class="material-icons">play_circle_outline</i>
     </div>
     <script>
+        const messageDisplay = document.createElement('p');
+        messageDisplay.textContent = 'test: ';
+        document.body.appendChild(messageDisplay);
+
+
         // Initialize Cast Receiver Framework
         const context = cast.framework.CastReceiverContext.getInstance();
 
