@@ -5,6 +5,9 @@
     <meta charset="UTF-8">
     <title>Innuos</title>
     <script src="https://www.gstatic.com/cast/sdk/libs/caf_receiver/v3/cast_receiver_framework.js"></script>
+    <!-- Cast Debug Logger -->
+    <script src="//www.gstatic.com/cast/sdk/libs/devtools/debug_layer/caf_receiver_logger.js"></script>
+
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
     <style>
@@ -19,7 +22,8 @@
             align-items: center;
             height: 100vh;
         }
-        p{
+
+        p {
             background-color: red;
         }
 
@@ -117,12 +121,20 @@
         messageDisplay.textContent = 'test: ';
         document.body.appendChild(messageDisplay);
 
+        const castDebugLogger = cast.debug.CastDebugLogger.getInstance();
 
         // Initialize Cast Receiver Framework
         const context = cast.framework.CastReceiverContext.getInstance();
 
-        // Set up the play/pause button action
-        const playIcon = document.querySelector(".play-icon i");
+
+        context.addEventListener(cast.framework.system.EventType.READY, () => {
+            if (!castDebugLogger.debugOverlayElement_) {
+                // Enable debug logger and show a 'DEBUG MODE' overlay at top left corner.
+                castDebugLogger.setEnabled(true);
+                // Show debug overlay
+                castDebugLogger.showDebugLogs(true);
+            }
+        });
 
         const nameSpace = "urn:x-cast:innuos.innuossense.com"
 
