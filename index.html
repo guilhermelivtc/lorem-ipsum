@@ -118,7 +118,7 @@
     </div>
     <script>
         const messageDisplay = document.createElement('p');
-        messageDisplay.textContent = 'test: ';
+        messageDisplay.textContent = 'test:1331231232131231231231312 ';
         document.body.appendChild(messageDisplay);
 
         const castDebugLogger = cast.debug.CastDebugLogger.getInstance();
@@ -150,7 +150,35 @@
             // Additional handling of the message can go here
         });
 
+        function broadcastTime() {
+            setInterval(() => {
+                const currentTime = new Date().toLocaleTimeString();
 
+                // Send the current time to all connected senders
+                context.getSenders().forEach((sender) => {
+                    context.sendMessage(namespace, {
+                        message: `Current time is: ${currentTime}`
+                    }, sender.id);
+                });
+            }, 1000); // Run every second
+        }
+        broadcastTime()
+
+
+
+        var castReceiverManager = cast.receiver.CastReceiverManager.getInstance();
+        // Retrieve the message bus from the cast receiver manager
+        var messageBus = castReceiverManager.getCastMessageBus("urn:x-cast:innuos.innuossense.com");
+        // Add message listener to the message bus
+        messageBus.onMessage = function (event) {
+            console.log('Received message:', event);
+
+            // Display the received message on the page (optional)
+            const messageDisplay = document.createElement('p');
+            messageDisplay.textContent = 'Message from sender: ' + JSON.stringify(event);
+            document.body.appendChild(messageDisplay);
+            console.log(event);
+        };
         // Start the receiver
         context.start();
     </script>
