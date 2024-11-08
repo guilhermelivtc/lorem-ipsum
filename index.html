@@ -126,17 +126,17 @@
 
         const nameSpace = "urn:x-cast:innuos.innuossense.com"
         const context = cast.framework.CastReceiverContext.getInstance();
-        const messageDisplay = document.createElement('p');
-        messageDisplay.textContent = 'teste: ' + JSON.stringify(context);
-        document.body.appendChild(messageDisplay);
+        const testDisplay = document.createElement('p');
+        testDisplay.textContent = 'teste: ' + JSON.stringify(context);
+        document.body.appendChild(testDisplay);
 
         context.addCustomMessageListener('urn:x-cast:innuos.innuossense.com', event => {
             console.log('CustomMessage: ', event);
 
             // Display the received message on the page (optional)
-            const messageDisplay = document.createElement('p');
-            messageDisplay.textContent = 'Message from sender: ' + JSON.stringify(event);
-            document.body.appendChild(messageDisplay);
+            const messageDisplay1 = document.createElement('p');
+            messageDisplay1.textContent = 'Message from sender: ' + JSON.stringify(event);
+            document.body.appendChild(messageDisplay1);
         });
 
         // Add a custom message listener for the namespace
@@ -144,9 +144,9 @@
             console.log('Received message:', customEvent.data);
 
             // Display the received message on the page (optional)
-            const messageDisplay = document.createElement('p');
-            messageDisplay.textContent = 'Message from sender: ' + JSON.stringify(customEvent.data);
-            document.body.appendChild(messageDisplay);
+            const messageDisplay2 = document.createElement('p');
+            messageDisplay2.textContent = 'Message from sender: ' + JSON.stringify(customEvent.data);
+            document.body.appendChild(messageDisplay2);
 
             // Additional handling of the message can go here
         });
