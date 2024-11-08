@@ -126,7 +126,10 @@
 
         const nameSpace = "urn:x-cast:innuos.innuossense.com"
         const context = cast.framework.CastReceiverContext.getInstance();
-        
+        const messageDisplay = document.createElement('p');
+        messageDisplay.textContent = 'teste: ' + JSON.stringify(context);
+        document.body.appendChild(messageDisplay);
+
         context.addCustomMessageListener('urn:x-cast:innuos.innuossense.com', event => {
             console.log('CustomMessage: ', event);
 
