@@ -7,7 +7,7 @@
     <script src="https://www.gstatic.com/cast/sdk/libs/caf_receiver/v3/cast_receiver_framework.js"></script>
     <!-- Cast Debug Logger -->
     <script src="https://www.gstatic.com/cast/sdk/libs/devtools/debug_layer/caf_receiver_logger.js"></script>
-    <script src="https://cdn.socket.io/4.6.1/socket.io.min.js" ></script>
+    <!--<script src="https://cdn.socket.io/4.6.1/socket.io.min.js" ></script>-->
 
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
@@ -127,8 +127,9 @@
         const nameSpace = "urn:x-cast:innuos.innuossense.com"
         const context = cast.framework.CastReceiverContext.getInstance();
         const testDisplay = document.createElement('p');
-        testDisplay.textContent = 'teste: ' + JSON.stringify(context);
-        document.body.appendChild(testDisplay);
+        console.log("Here", context)
+        //testDisplay.textContent = 'teste: ' + JSON.stringify(context);
+        //document.body.appendChild(testDisplay);
 
         context.addCustomMessageListener('urn:x-cast:innuos.innuossense.com', event => {
             console.log('CustomMessage: ', event);
@@ -167,7 +168,7 @@
 
         // Start the receiver
         context.start();
-
+/*
         const playerSocket = io('http://192.168.1.200:3000/');
 
         playerSocket.on("connect", () => {
@@ -175,7 +176,7 @@
         })
         playerSocket.on("player_status", newPlayerState => {
             setPlayingInfo(newPlayerState.player_loop[playerId])
-        });
+        });*/
 
     </script>
 </body>
