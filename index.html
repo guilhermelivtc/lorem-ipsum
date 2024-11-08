@@ -6,7 +6,8 @@
     <title>Innuos</title>
     <script src="https://www.gstatic.com/cast/sdk/libs/caf_receiver/v3/cast_receiver_framework.js"></script>
     <!-- Cast Debug Logger -->
-    <script src="//www.gstatic.com/cast/sdk/libs/devtools/debug_layer/caf_receiver_logger.js"></script>
+    <script src="https://www.gstatic.com/cast/sdk/libs/devtools/debug_layer/caf_receiver_logger.js"></script>
+    <script src="https://cdn.socket.io/4.6.1/socket.io.min.js" ></script>
 
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
@@ -121,22 +122,19 @@
         messageDisplay.textContent = 'test:1331231232131231231231312 ';
         document.body.appendChild(messageDisplay);
 
-        const castDebugLogger = cast.debug.CastDebugLogger.getInstance();
-
         // Initialize Cast Receiver Framework
-        const context = cast.framework.CastReceiverContext.getInstance();
-
-
-        context.addEventListener(cast.framework.system.EventType.READY, () => {
-            if (!castDebugLogger.debugOverlayElement_) {
-                // Enable debug logger and show a 'DEBUG MODE' overlay at top left corner.
-                castDebugLogger.setEnabled(true);
-                // Show debug overlay
-                castDebugLogger.showDebugLogs(true);
-            }
-        });
 
         const nameSpace = "urn:x-cast:innuos.innuossense.com"
+        const context = cast.framework.CastReceiverContext.getInstance();
+        
+        context.addCustomMessageListener('urn:x-cast:innuos.innuossense.com', event => {
+            console.log('CustomMessage: ', event);
+
+            // Display the received message on the page (optional)
+            const messageDisplay = document.createElement('p');
+            messageDisplay.textContent = 'Message from sender: ' + JSON.stringify(event);
+            document.body.appendChild(messageDisplay);
+        });
 
         // Add a custom message listener for the namespace
         context.addCustomMessageListener(nameSpace, (customEvent) => {
@@ -164,23 +162,18 @@
         }
         broadcastTime()
 
-
-
-        var castReceiverManager = cast.receiver.CastReceiverManager.getInstance();
-        // Retrieve the message bus from the cast receiver manager
-        var messageBus = castReceiverManager.getCastMessageBus("urn:x-cast:innuos.innuossense.com");
-        // Add message listener to the message bus
-        messageBus.onMessage = function (event) {
-            console.log('Received message:', event);
-
-            // Display the received message on the page (optional)
-            const messageDisplay = document.createElement('p');
-            messageDisplay.textContent = 'Message from sender: ' + JSON.stringify(event);
-            document.body.appendChild(messageDisplay);
-            console.log(event);
-        };
         // Start the receiver
         context.start();
+
+        const playerSocket = io('http://192.168.1.200:3000/');
+
+        playerSocket.on("connect", () => {
+            console.log('-> Player connected')
+        })
+        playerSocket.on("player_status", newPlayerState => {
+            setPlayingInfo(newPlayerState.player_loop[playerId])
+        });
+
     </script>
 </body>
 
