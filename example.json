@@ -1,0 +1,609 @@
+{
+    "playing_object": null,
+    "track": {
+        "source": "QOBUZ",
+        "album": "Linger Awhile",
+        "album_id": "qobuz#x95616fwfgy6a",
+        "bit_depth": 24,
+        "bit_rate": "2618 kbps CBR",
+        "format": "FLAC",
+        "genres": [
+            "Jazz"
+        ],
+        "id": "qobuz#173608743",
+        "length": "05:42",
+        "sample_rate": 96,
+        "title": "'Round Midnight",
+        "url": "online_qobuz://173608743",
+        "year": "2022",
+        "service_title": null,
+        "favorite": false,
+        "radio": null,
+        "podcast": null,
+        "cover": "https://static.qobuz.com/images/covers/6a/gy/x95616fwfgy6a_600.jpg",
+        "external_id": 173608743,
+        "composer": [
+            {
+                "name": "Thelonious Monk",
+                "id": "online_qobuz#2036",
+                "source": "QOBUZ"
+            }
+        ],
+        "artist": [
+            {
+                "name": "Samara Joy",
+                "id": "online_qobuz#8133288",
+                "source": "QOBUZ"
+            }
+        ],
+        "bitrate": "320000",
+        "samplesize": 24,
+        "samplerate": 96000,
+        "tracknum": 9,
+        "library": false,
+        "work": null,
+        "performers": "Bernard D. Hanighen, ComposerLyricist - Christopher Allen, Mixer, Recording Engineer, StudioPersonnel - Thelonious Monk, ComposerLyricist - Cootie Williams, ComposerLyricist - MATT PIERSON, Producer - Mark Wilder, Mastering Engineer, StudioPersonnel - Kenny Washington, Drums, AssociatedPerformer - Terell Stafford, Flugelhorn, Trumpet, AssociatedPerformer - Will Bennett, Asst. Recording Engineer, StudioPersonnel - David Wong, Double Bass, AssociatedPerformer - Ben Paterson, Piano, AssociatedPerformer - Pasquale Grasso, Guitar, AssociatedPerformer - Sampson Alvarado, Asst. Recording Engineer, StudioPersonnel - Samara Joy, Vocals, MainArtist, AssociatedPerformer - Kendric McCallister, Tenor Saxophone, Recording Arranger, AssociatedPerformer - Donavan Austin, Trombone, AssociatedPerformer",
+        "copyright": "℗ 2022 Dear Beverly Music, LLC, under exclusive license to Verve Label Group, a division of UMG Recordings, Inc.",
+        "effective_bitrate": "2618 kbps CBR",
+        "length_in_seconds": 342,
+        "disc_number": 1,
+        "quality": "HD96",
+        "quality_description": "HD96",
+        "index": 8,
+        "exists": true
+    },
+    "queue": {
+        "0": {
+            "source": "QOBUZ",
+            "album": "Linger Awhile",
+            "album_id": "qobuz#x95616fwfgy6a",
+            "bit_depth": 24,
+            "bit_rate": "320 kbps",
+            "format": "FLAC",
+            "genres": [
+                "Jazz"
+            ],
+            "id": "qobuz#173608735",
+            "length": "03:42",
+            "sample_rate": 96,
+            "title": "Can't Get Out Of This Mood",
+            "url": "qobuz://173608735",
+            "year": "2022",
+            "service_title": null,
+            "favorite": false,
+            "radio": null,
+            "podcast": null,
+            "cover": "https://static.qobuz.com/images/covers/6a/gy/x95616fwfgy6a_600.jpg",
+            "external_id": 173608735,
+            "composer": [
+                {
+                    "name": "Jimmy McHugh",
+                    "id": "online_qobuz#47290",
+                    "source": "QOBUZ"
+                }
+            ],
+            "artist": [
+                {
+                    "name": "Samara Joy",
+                    "id": "online_qobuz#8133288",
+                    "source": "QOBUZ"
+                }
+            ],
+            "bitrate": "320000",
+            "samplesize": 24,
+            "samplerate": 96000,
+            "tracknum": 1,
+            "library": true,
+            "work": null,
+            "performers": "Christopher Allen, Mixer, Recording Engineer, StudioPersonnel - FRANK LOESSER, Author - MATT PIERSON, Producer - Jimmy McHugh, Composer - Mark Wilder, Mastering Engineer, StudioPersonnel - Kenny Washington, Drums, AssociatedPerformer - Will Bennett, Asst. Recording Engineer, StudioPersonnel - David Wong, Double Bass, AssociatedPerformer - Ben Paterson, Piano, AssociatedPerformer - Sampson Alvarado, Asst. Recording Engineer, StudioPersonnel - Samara Joy, Vocals, MainArtist, AssociatedPerformer",
+            "copyright": "℗ 2022 Dear Beverly Music, LLC, under exclusive license to Verve Label Group, a division of UMG Recordings, Inc.",
+            "effective_bitrate": "2636 kbps CBR",
+            "length_in_seconds": 222,
+            "disc_number": 1,
+            "quality": "HD96",
+            "quality_description": "HD96",
+            "index": 0,
+            "exists": true
+        },
+        "1": {
+            "source": "QOBUZ",
+            "album": "Linger Awhile",
+            "album_id": "qobuz#x95616fwfgy6a",
+            "bit_depth": 24,
+            "bit_rate": "320 kbps",
+            "format": "FLAC",
+            "genres": [
+                "Jazz"
+            ],
+            "id": "qobuz#173608736",
+            "length": "04:09",
+            "sample_rate": 96,
+            "title": "Guess Who I Saw Today",
+            "url": "online_qobuz://173608736",
+            "year": "2022",
+            "service_title": null,
+            "favorite": false,
+            "radio": null,
+            "podcast": null,
+            "cover": "https://static.qobuz.com/images/covers/6a/gy/x95616fwfgy6a_600.jpg",
+            "external_id": 173608736,
+            "composer": [
+                {
+                    "name": "Elisse Boyd",
+                    "id": "online_qobuz#216512",
+                    "source": "QOBUZ"
+                }
+            ],
+            "artist": [
+                {
+                    "name": "Samara Joy",
+                    "id": "online_qobuz#8133288",
+                    "source": "QOBUZ"
+                }
+            ],
+            "bitrate": "320000",
+            "samplesize": 24,
+            "samplerate": 96000,
+            "tracknum": 2,
+            "library": false,
+            "work": null,
+            "performers": "Christopher Allen, Mixer, Recording Engineer, StudioPersonnel - Murray Grand, ComposerLyricist - Elisse Boyd, ComposerLyricist - MATT PIERSON, Producer - Mark Wilder, Mastering Engineer, StudioPersonnel - Kenny Washington, Drums, AssociatedPerformer - Will Bennett, Asst. Recording Engineer, StudioPersonnel - David Wong, Double Bass, AssociatedPerformer - Ben Paterson, Piano, AssociatedPerformer - Pasquale Grasso, Guitar, AssociatedPerformer - Sampson Alvarado, Asst. Recording Engineer, StudioPersonnel - Samara Joy, Vocals, MainArtist, AssociatedPerformer",
+            "copyright": "℗ 2022 Dear Beverly Music, LLC, under exclusive license to Verve Label Group, a division of UMG Recordings, Inc.",
+            "effective_bitrate": "2544 kbps CBR",
+            "length_in_seconds": 249,
+            "disc_number": 1,
+            "quality": "HD96",
+            "quality_description": "HD96",
+            "index": 1,
+            "exists": true
+        },
+        "2": {
+            "source": "QOBUZ",
+            "album": "Linger Awhile",
+            "album_id": "qobuz#x95616fwfgy6a",
+            "bit_depth": 24,
+            "bit_rate": "320 kbps",
+            "format": "FLAC",
+            "genres": [
+                "Jazz"
+            ],
+            "id": "qobuz#173608737",
+            "length": "03:30",
+            "sample_rate": 96,
+            "title": "Nostalgia (The Day I Knew)",
+            "url": "online_qobuz://173608737",
+            "year": "2022",
+            "service_title": null,
+            "favorite": false,
+            "radio": null,
+            "podcast": null,
+            "cover": "https://static.qobuz.com/images/covers/6a/gy/x95616fwfgy6a_600.jpg",
+            "external_id": 173608737,
+            "composer": [
+                {
+                    "name": "Samara Joy",
+                    "id": "online_qobuz#8133288",
+                    "source": "QOBUZ"
+                }
+            ],
+            "artist": [
+                {
+                    "name": "Samara Joy",
+                    "id": "online_qobuz#8133288",
+                    "source": "QOBUZ"
+                }
+            ],
+            "bitrate": "320000",
+            "samplesize": 24,
+            "samplerate": 96000,
+            "tracknum": 3,
+            "library": false,
+            "work": null,
+            "performers": "Christopher Allen, Mixer, Recording Engineer, StudioPersonnel - MATT PIERSON, Producer - Fats Navarro, ComposerLyricist - Mark Wilder, Mastering Engineer, StudioPersonnel - Kenny Washington, Drums, AssociatedPerformer - Will Bennett, Asst. Recording Engineer, StudioPersonnel - David Wong, Double Bass, AssociatedPerformer - Pasquale Grasso, Guitar, AssociatedPerformer - Sampson Alvarado, Asst. Recording Engineer, StudioPersonnel - Samara Joy, Vocals, MainArtist, AssociatedPerformer, ComposerLyricist",
+            "copyright": "℗ 2022 Dear Beverly Music, LLC, under exclusive license to Verve Label Group, a division of UMG Recordings, Inc.",
+            "effective_bitrate": "2663 kbps CBR",
+            "length_in_seconds": 210,
+            "disc_number": 1,
+            "quality": "HD96",
+            "quality_description": "HD96",
+            "index": 2,
+            "exists": true
+        },
+        "3": {
+            "source": "QOBUZ",
+            "album": "Linger Awhile",
+            "album_id": "qobuz#x95616fwfgy6a",
+            "bit_depth": 24,
+            "bit_rate": "320 kbps",
+            "format": "FLAC",
+            "genres": [
+                "Jazz"
+            ],
+            "id": "qobuz#173608738",
+            "length": "03:54",
+            "sample_rate": 96,
+            "title": "Sweet Pumpkin",
+            "url": "online_qobuz://173608738",
+            "year": "2022",
+            "service_title": null,
+            "favorite": false,
+            "radio": null,
+            "podcast": null,
+            "cover": "https://static.qobuz.com/images/covers/6a/gy/x95616fwfgy6a_600.jpg",
+            "external_id": 173608738,
+            "composer": [
+                {
+                    "name": "Ronnell Bright",
+                    "id": "online_qobuz#39848",
+                    "source": "QOBUZ"
+                }
+            ],
+            "artist": [
+                {
+                    "name": "Samara Joy",
+                    "id": "online_qobuz#8133288",
+                    "source": "QOBUZ"
+                }
+            ],
+            "bitrate": "320000",
+            "samplesize": 24,
+            "samplerate": 96000,
+            "tracknum": 4,
+            "library": false,
+            "work": null,
+            "performers": "Christopher Allen, Mixer, Recording Engineer, StudioPersonnel - MATT PIERSON, Producer - Mark Wilder, Mastering Engineer, StudioPersonnel - Kenny Washington, Drums, AssociatedPerformer - Ronnell Bright, ComposerLyricist - Will Bennett, Asst. Recording Engineer, StudioPersonnel - David Wong, Double Bass, AssociatedPerformer - Pasquale Grasso, Guitar, FeaturedArtist, AssociatedPerformer - Sampson Alvarado, Asst. Recording Engineer, StudioPersonnel - Samara Joy, Vocals, MainArtist, AssociatedPerformer",
+            "copyright": "℗ 2022 Dear Beverly Music, LLC, under exclusive license to Verve Label Group, a division of UMG Recordings, Inc.",
+            "effective_bitrate": "2754 kbps CBR",
+            "length_in_seconds": 234,
+            "disc_number": 1,
+            "quality": "HD96",
+            "quality_description": "HD96",
+            "index": 3,
+            "exists": true
+        },
+        "4": {
+            "source": "QOBUZ",
+            "album": "Linger Awhile",
+            "album_id": "qobuz#x95616fwfgy6a",
+            "bit_depth": 24,
+            "bit_rate": "320 kbps",
+            "format": "FLAC",
+            "genres": [
+                "Jazz"
+            ],
+            "id": "qobuz#173608739",
+            "length": "04:54",
+            "sample_rate": 96,
+            "title": "Misty",
+            "url": "online_qobuz://173608739",
+            "year": "2022",
+            "service_title": null,
+            "favorite": false,
+            "radio": null,
+            "podcast": null,
+            "cover": "https://static.qobuz.com/images/covers/6a/gy/x95616fwfgy6a_600.jpg",
+            "external_id": 173608739,
+            "composer": [
+                {
+                    "name": "Erroll Garner",
+                    "id": "online_qobuz#187721",
+                    "source": "QOBUZ"
+                }
+            ],
+            "artist": [
+                {
+                    "name": "Samara Joy",
+                    "id": "online_qobuz#8133288",
+                    "source": "QOBUZ"
+                }
+            ],
+            "bitrate": "320000",
+            "samplesize": 24,
+            "samplerate": 96000,
+            "tracknum": 5,
+            "library": false,
+            "work": null,
+            "performers": "Christopher Allen, Mixer, Recording Engineer, StudioPersonnel - MATT PIERSON, Producer - Johnny Burke, Author - Erroll Garner, ComposerLyricist - Mark Wilder, Mastering Engineer, StudioPersonnel - Kenny Washington, Drums, AssociatedPerformer - Will Bennett, Asst. Recording Engineer, StudioPersonnel - David Wong, Double Bass, AssociatedPerformer - Ben Paterson, Piano, AssociatedPerformer - Sampson Alvarado, Asst. Recording Engineer, StudioPersonnel - Samara Joy, Vocals, MainArtist, AssociatedPerformer",
+            "copyright": "℗ 2022 Dear Beverly Music, LLC, under exclusive license to Verve Label Group, a division of UMG Recordings, Inc.",
+            "effective_bitrate": "2556 kbps CBR",
+            "length_in_seconds": 294,
+            "disc_number": 1,
+            "quality": "HD96",
+            "quality_description": "HD96",
+            "index": 4,
+            "exists": true
+        },
+        "5": {
+            "source": "QOBUZ",
+            "album": "Linger Awhile",
+            "album_id": "qobuz#x95616fwfgy6a",
+            "bit_depth": 24,
+            "bit_rate": "320 kbps",
+            "format": "FLAC",
+            "genres": [
+                "Jazz"
+            ],
+            "id": "qobuz#173608740",
+            "length": "04:30",
+            "sample_rate": 96,
+            "title": "Social Call",
+            "url": "online_qobuz://173608740",
+            "year": "2022",
+            "service_title": null,
+            "favorite": false,
+            "radio": null,
+            "podcast": null,
+            "cover": "https://static.qobuz.com/images/covers/6a/gy/x95616fwfgy6a_600.jpg",
+            "external_id": 173608740,
+            "composer": [
+                {
+                    "name": "Basheer Qusim",
+                    "id": "online_qobuz#1593778",
+                    "source": "QOBUZ"
+                }
+            ],
+            "artist": [
+                {
+                    "name": "Samara Joy",
+                    "id": "online_qobuz#8133288",
+                    "source": "QOBUZ"
+                }
+            ],
+            "bitrate": "320000",
+            "samplesize": 24,
+            "samplerate": 96000,
+            "tracknum": 6,
+            "library": false,
+            "work": null,
+            "performers": "Christopher Allen, Mixer, Recording Engineer, StudioPersonnel - Jon Hendricks, ComposerLyricist - MATT PIERSON, Producer - Mark Wilder, Mastering Engineer, StudioPersonnel - Kenny Washington, Drums, AssociatedPerformer - Will Bennett, Asst. Recording Engineer, StudioPersonnel - David Wong, Double Bass, AssociatedPerformer - Ben Paterson, Piano, AssociatedPerformer - Basheer Qusim, ComposerLyricist - Pasquale Grasso, Guitar, AssociatedPerformer - Sampson Alvarado, Asst. Recording Engineer, StudioPersonnel - Samara Joy, Vocals, MainArtist, AssociatedPerformer",
+            "copyright": "℗ 2022 Dear Beverly Music, LLC, under exclusive license to Verve Label Group, a division of UMG Recordings, Inc.",
+            "effective_bitrate": "2894 kbps CBR",
+            "length_in_seconds": 270,
+            "disc_number": 1,
+            "quality": "HD96",
+            "quality_description": "HD96",
+            "index": 5,
+            "exists": true
+        },
+        "6": {
+            "source": "QOBUZ",
+            "album": "Linger Awhile",
+            "album_id": "qobuz#x95616fwfgy6a",
+            "bit_depth": 24,
+            "bit_rate": "320 kbps",
+            "format": "FLAC",
+            "genres": [
+                "Jazz"
+            ],
+            "id": "qobuz#173608741",
+            "length": "05:04",
+            "sample_rate": 96,
+            "title": "I'm Confessin' (That I Love You)",
+            "url": "online_qobuz://173608741",
+            "year": "2022",
+            "service_title": null,
+            "favorite": false,
+            "radio": null,
+            "podcast": null,
+            "cover": "https://static.qobuz.com/images/covers/6a/gy/x95616fwfgy6a_600.jpg",
+            "external_id": 173608741,
+            "composer": [
+                {
+                    "name": "Doc Daugherty",
+                    "id": "online_qobuz#70652",
+                    "source": "QOBUZ"
+                }
+            ],
+            "artist": [
+                {
+                    "name": "Samara Joy",
+                    "id": "online_qobuz#8133288",
+                    "source": "QOBUZ"
+                }
+            ],
+            "bitrate": "320000",
+            "samplesize": 24,
+            "samplerate": 96000,
+            "tracknum": 7,
+            "library": false,
+            "work": null,
+            "performers": "Christopher Allen, Mixer, Recording Engineer, StudioPersonnel - MATT PIERSON, Producer - Ellis Reynolds, Composer - Mark Wilder, Mastering Engineer, StudioPersonnel - Doc Daugherty, Composer - Kenny Washington, Drums, AssociatedPerformer - Al Neiburg, Author - Will Bennett, Asst. Recording Engineer, StudioPersonnel - David Wong, Double Bass, AssociatedPerformer - Ben Paterson, Piano, AssociatedPerformer - Pasquale Grasso, Guitar, AssociatedPerformer - Sampson Alvarado, Asst. Recording Engineer, StudioPersonnel - Samara Joy, Vocals, MainArtist, AssociatedPerformer",
+            "copyright": "℗ 2022 Dear Beverly Music, LLC, under exclusive license to Verve Label Group, a division of UMG Recordings, Inc.",
+            "effective_bitrate": "2626 kbps CBR",
+            "length_in_seconds": 304,
+            "disc_number": 1,
+            "quality": "HD96",
+            "quality_description": "HD96",
+            "index": 6,
+            "exists": true
+        },
+        "7": {
+            "source": "QOBUZ",
+            "album": "Linger Awhile",
+            "album_id": "qobuz#x95616fwfgy6a",
+            "bit_depth": 24,
+            "bit_rate": "320 kbps",
+            "format": "FLAC",
+            "genres": [
+                "Jazz"
+            ],
+            "id": "qobuz#173608742",
+            "length": "01:47",
+            "sample_rate": 96,
+            "title": "Linger Awhile",
+            "url": "online_qobuz://173608742",
+            "year": "2022",
+            "service_title": null,
+            "favorite": false,
+            "radio": null,
+            "podcast": null,
+            "cover": "https://static.qobuz.com/images/covers/6a/gy/x95616fwfgy6a_600.jpg",
+            "external_id": 173608742,
+            "composer": [
+                {
+                    "name": "Harry Owens",
+                    "id": "online_qobuz#49324",
+                    "source": "QOBUZ"
+                }
+            ],
+            "artist": [
+                {
+                    "name": "Samara Joy",
+                    "id": "online_qobuz#8133288",
+                    "source": "QOBUZ"
+                }
+            ],
+            "bitrate": "320000",
+            "samplesize": 24,
+            "samplerate": 96000,
+            "tracknum": 8,
+            "library": false,
+            "work": null,
+            "performers": "Christopher Allen, Mixer, Recording Engineer, StudioPersonnel - MATT PIERSON, Producer - Vincent Rose, ComposerLyricist - HARRY OWENS, ComposerLyricist - Mark Wilder, Mastering Engineer, StudioPersonnel - Kenny Washington, Drums, AssociatedPerformer - Will Bennett, Asst. Recording Engineer, StudioPersonnel - David Wong, Double Bass, AssociatedPerformer - Ben Paterson, Piano, AssociatedPerformer - Pasquale Grasso, Guitar, FeaturedArtist, AssociatedPerformer - Sampson Alvarado, Asst. Recording Engineer, StudioPersonnel - Samara Joy, Vocals, MainArtist, AssociatedPerformer",
+            "copyright": "℗ 2022 Dear Beverly Music, LLC, under exclusive license to Verve Label Group, a division of UMG Recordings, Inc.",
+            "effective_bitrate": "3026 kbps CBR",
+            "length_in_seconds": 107,
+            "disc_number": 1,
+            "quality": "HD96",
+            "quality_description": "HD96",
+            "index": 7,
+            "exists": true
+        },
+        "8": {
+            "source": "QOBUZ",
+            "album": "Linger Awhile",
+            "album_id": "qobuz#x95616fwfgy6a",
+            "bit_depth": 24,
+            "bit_rate": "2618 kbps CBR",
+            "format": "FLAC",
+            "genres": [
+                "Jazz"
+            ],
+            "id": "qobuz#173608743",
+            "length": "05:42",
+            "sample_rate": 96,
+            "title": "'Round Midnight",
+            "url": "online_qobuz://173608743",
+            "year": "2022",
+            "service_title": null,
+            "favorite": false,
+            "radio": null,
+            "podcast": null,
+            "cover": "https://static.qobuz.com/images/covers/6a/gy/x95616fwfgy6a_600.jpg",
+            "external_id": 173608743,
+            "composer": [
+                {
+                    "name": "Thelonious Monk",
+                    "id": "online_qobuz#2036",
+                    "source": "QOBUZ"
+                }
+            ],
+            "artist": [
+                {
+                    "name": "Samara Joy",
+                    "id": "online_qobuz#8133288",
+                    "source": "QOBUZ"
+                }
+            ],
+            "bitrate": "320000",
+            "samplesize": 24,
+            "samplerate": 96000,
+            "tracknum": 9,
+            "library": false,
+            "work": null,
+            "performers": "Bernard D. Hanighen, ComposerLyricist - Christopher Allen, Mixer, Recording Engineer, StudioPersonnel - Thelonious Monk, ComposerLyricist - Cootie Williams, ComposerLyricist - MATT PIERSON, Producer - Mark Wilder, Mastering Engineer, StudioPersonnel - Kenny Washington, Drums, AssociatedPerformer - Terell Stafford, Flugelhorn, Trumpet, AssociatedPerformer - Will Bennett, Asst. Recording Engineer, StudioPersonnel - David Wong, Double Bass, AssociatedPerformer - Ben Paterson, Piano, AssociatedPerformer - Pasquale Grasso, Guitar, AssociatedPerformer - Sampson Alvarado, Asst. Recording Engineer, StudioPersonnel - Samara Joy, Vocals, MainArtist, AssociatedPerformer - Kendric McCallister, Tenor Saxophone, Recording Arranger, AssociatedPerformer - Donavan Austin, Trombone, AssociatedPerformer",
+            "copyright": "℗ 2022 Dear Beverly Music, LLC, under exclusive license to Verve Label Group, a division of UMG Recordings, Inc.",
+            "effective_bitrate": "2618 kbps CBR",
+            "length_in_seconds": 342,
+            "disc_number": 1,
+            "quality": "HD96",
+            "quality_description": "HD96",
+            "index": 8,
+            "exists": true
+        },
+        "9": {
+            "source": "QOBUZ",
+            "album": "Linger Awhile",
+            "album_id": "qobuz#x95616fwfgy6a",
+            "bit_depth": 24,
+            "bit_rate": "320 kbps",
+            "format": "FLAC",
+            "genres": [
+                "Jazz"
+            ],
+            "id": "qobuz#173608744",
+            "length": "04:02",
+            "sample_rate": 96,
+            "title": "Someone To Watch Over Me",
+            "url": "online_qobuz://173608744",
+            "year": "2022",
+            "service_title": null,
+            "favorite": false,
+            "radio": null,
+            "podcast": null,
+            "cover": "https://static.qobuz.com/images/covers/6a/gy/x95616fwfgy6a_600.jpg",
+            "external_id": 173608744,
+            "composer": [
+                {
+                    "name": "George Gershwin",
+                    "id": "online_qobuz#245",
+                    "source": "QOBUZ"
+                }
+            ],
+            "artist": [
+                {
+                    "name": "Samara Joy",
+                    "id": "online_qobuz#8133288",
+                    "source": "QOBUZ"
+                }
+            ],
+            "bitrate": "320000",
+            "samplesize": 24,
+            "samplerate": 96000,
+            "tracknum": 10,
+            "library": false,
+            "work": null,
+            "performers": "Christopher Allen, Mixer, Recording Engineer, StudioPersonnel - George Gershwin, ComposerLyricist - Ira Gershwin, ComposerLyricist - MATT PIERSON, Producer - Mark Wilder, Mastering Engineer, StudioPersonnel - Will Bennett, Asst. Recording Engineer, StudioPersonnel - Pasquale Grasso, Guitar, FeaturedArtist, AssociatedPerformer - Sampson Alvarado, Asst. Recording Engineer, StudioPersonnel - Samara Joy, Vocals, MainArtist, AssociatedPerformer",
+            "copyright": "℗ 2022 Dear Beverly Music, LLC, under exclusive license to Verve Label Group, a division of UMG Recordings, Inc.",
+            "effective_bitrate": "2167 kbps CBR",
+            "length_in_seconds": 242,
+            "disc_number": 1,
+            "quality": "HD96",
+            "quality_description": "HD96",
+            "index": 9,
+            "exists": true
+        }
+    },
+    "time": 0,
+    "shuffle": 0,
+    "repeat": 0,
+    "mode": "stop",
+    "volume": 70,
+    "mute": false,
+    "random_play": false,
+    "queue_total_time": "41:14",
+    "queue_remaining_time": "04:02",
+    "player_status": "ok",
+    "player_mode": "qobuz.premium.stream",
+    "behaviors": {
+        "autoplay": false,
+        "play": true,
+        "pause": true,
+        "stop": true,
+        "seek": {
+            "backward": true,
+            "forward": true
+        },
+        "skip": {
+            "backward": true,
+            "forward": true
+        },
+        "playmode": {
+            "shuffle": true,
+            "repeat": true,
+            "loop": true
+        },
+        "queue": true
+    },
+    "airable_mix_id": null
+}
