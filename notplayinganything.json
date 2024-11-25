@@ -1,0 +1,37 @@
+{
+    "playing_object": null,
+    "track": null,
+    "queue": {},
+    "time": 0,
+    "shuffle": 0,
+    "repeat": 0,
+    "mode": "stop",
+    "volume": 70,
+    "mute": false,
+    "random_play": false,
+    "queue_total_time": "00:00",
+    "queue_remaining_time": "00:00",
+    "player_status": "smart_mix",
+    "player_mode": "",
+    "behaviors": {
+        "autoplay": false,
+        "play": true,
+        "pause": true,
+        "stop": true,
+        "seek": {
+            "backward": true,
+            "forward": true
+        },
+        "skip": {
+            "backward": true,
+            "forward": true
+        },
+        "playmode": {
+            "shuffle": true,
+            "repeat": true,
+            "loop": true
+        },
+        "queue": true
+    },
+    "airable_mix_id": null
+}

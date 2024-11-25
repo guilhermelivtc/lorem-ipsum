@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Innuos</title>
+    <script src="https://www.gstatic.com/cast/sdk/libs/caf_receiver/v3/cast_receiver_framework.js"></script>
+    <!-- Cast Debug Logger -->
+    <script src="https://www.gstatic.com/cast/sdk/libs/devtools/debug_layer/caf_receiver_logger.js"></script>
+    <script src="./node_modules/socket.io/client-dist/socket.io.js"></script>
+
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+    <style>
+        body {
+            font-family: 'Roboto', sans-serif;
+            background-color: #1a1a1a;
+            color: white;
+            margin: 0;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        #loading,
+        #error,
+        .content {
+            display: none;
+        }
+
+        #loading.active,
+        #error.active,
+        .content.active {
+            display: flex;
+        }
+
+        #loading {
+            font-size: 2em;
+        }
+
+        #error {
+            font-size: 2em;
+            color: red;
+        }
+
+        .content {
+            flex-direction: row;
+            justify-content: center;
+            align-items: center;
+            width: 90%;
+            max-width: 1200px;
+        }
+
+        #album-art {
+            width: 60%;
+            max-width: 400px;
+            height: auto;
+            border-radius: 12px;
+        }
+
+        .info {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: flex-start;
+            margin-left: 30px;
+            max-width: 50%;
+        }
+
+        .info h3 {
+            font-size: 3vw;
+            margin: 10px 0;
+        }
+
+        .play-icon {
+            margin-top: 60px;
+            text-align: center;
+        }
+
+        .material-icons {
+            font-size: 8vw;
+            color: white;
+            cursor: pointer;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="loading" class="active">Loading...</div>
+    <div id="error">Error: Unable to load song data</div>
+
+    <div class="content">
+        <img id="album-art" src="https://static.qobuz.com/images/covers/6a/gy/x95616fwfgy6a_600.jpg" alt="Album Art">
+        <div class="info">
+            <div id="song-title">
+                <h3>Can't Get Out Of This Mood</h3>
+            </div>
+            <div id="artist-name">
+                <h3>Samara Joy</h3>
+            </div>
+        </div>
+        <div class="play-icon">
+            <i class="material-icons">play_circle_outline</i>
+        </div>
+    </div>
+
+    <script>
+        const loadingScreen = document.getElementById('loading');
+        const errorScreen = document.getElementById('error');
+        const contentScreen = document.querySelector('.content');
+
+        const playerSocket = io('http://192.168.1.200:3000/');
+        console.log("12312321312312", io)
+        playerSocket.on("connect", () => {
+            console.log('-> Player connected')
+        })
+
+        playerSocket.on("player_status", newPlayerState => {
+            console.log("salve", newPlayerState)
+            const playerObject = newPlayerState.player_loop['4c:38:d5:15:52:7e'];
+            console.log("salve", playerObject)
+
+            if (playerObject && playerObject.track) {
+                const title = playerObject.track.title;
+                const artist = playerObject.track.artist[0]?.name || "Unknown Artist";
+                const cover = playerObject.track.cover;
+
+                if (title && artist && cover) {
+                    document.getElementById("song-title").querySelector("h3").textContent = title;
+                    document.getElementById("artist-name").querySelector("h3").textContent = artist;
+                    document.getElementById("album-art").src = cover;
+
+                    loadingScreen.classList.remove('active');
+                    errorScreen.classList.remove('active');
+                    contentScreen.classList.add('active');
+                } else {
+                    showError();
+                }
+            } else {
+                showError();
+            }
+        });
+        /*
+                const messageDisplay = document.createElement('p');
+                messageDisplay.textContent = 'test:new testes ';
+                document.body.appendChild(messageDisplay);
+        
+                // Initialize Cast Receiver Framework
+        
+                const nameSpace = "urn:x-cast:innuos.innuossense.com"
+                const context = cast.framework.CastReceiverContext.getInstance();
+                const testDisplay = document.createElement('p');
+                console.log("Here", context)
+                //testDisplay.textContent = 'teste: ' + JSON.stringify(context);
+                //document.body.appendChild(testDisplay);
+        
+                const playerManager = context.getPlayerManager();
+        
+                // Optionally set up event handlers for when media loads
+                playerManager.setMessageInterceptor(
+                    cast.framework.messages.MessageType.LOAD,
+                    (loadRequestData) => {
+                        console.log('Load request received:', loadRequestData);
+                        const messageDisplayteste = document.createElement('p');
+                        messageDisplayteste.textContent = 'Message from sender: ' + JSON.stringify(loadRequestData);
+                        document.body.appendChild(messageDisplayteste);
+        
+                        // Return the data as-is or modified for further handling
+                        return loadRequestData;
+                    }
+                );
+        
+        
+                context.addCustomMessageListener('urn:x-cast:innuos.innuossense.com', event => {
+                    console.log('CustomMessage: ', event);
+        
+                    // Display the received message on the page (optional)
+                    const messageDisplay1 = document.createElement('p');
+                    messageDisplay1.textContent = 'Message from sender: ' + JSON.stringify(event);
+                    document.body.appendChild(messageDisplay1);
+                });
+        
+                // Add a custom message listener for the namespace
+                context.addCustomMessageListener(nameSpace, (customEvent) => {
+                    console.log('Received message:', customEvent.data);
+        
+                    // Display the received message on the page (optional)
+                    const messageDisplay2 = document.createElement('p');
+                    messageDisplay2.textContent = 'Message from sender: ' + JSON.stringify(customEvent.data);
+                    document.body.appendChild(messageDisplay2);
+        
+                    // Additional handling of the message can go here
+                });
+        
+                function broadcastTime() {
+                    setInterval(() => {
+                        const currentTime = new Date().toLocaleTimeString();
+        
+                        // Send the current time to all connected senders
+                        context.getSenders().forEach((sender) => {
+                            context.sendMessage(namespace, {
+                                message: `Current time is: ${currentTime}`
+                            }, sender.id);
+                        });
+                    }, 1000); // Run every second
+                }
+                broadcastTime()
+        
+                // Start the receiver
+                context.start();*/
+
+    </script>
+</body>
+
+</html>
