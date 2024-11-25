@@ -7,7 +7,7 @@
     <script src="https://www.gstatic.com/cast/sdk/libs/caf_receiver/v3/cast_receiver_framework.js"></script>
     <!-- Cast Debug Logger -->
     <script src="https://www.gstatic.com/cast/sdk/libs/devtools/debug_layer/caf_receiver_logger.js"></script>
-    <!--<script src="https://cdn.socket.io/4.6.1/socket.io.min.js" ></script>-->
+    <script src="./node_modules/socket.io/client-dist/socket.io.js"></script>
 
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
@@ -24,12 +24,28 @@
             height: 100vh;
         }
 
-        p {
-            background-color: red;
+        #loading,
+        #error,
+        .content {
+            display: none;
+        }
+
+        #loading.active,
+        #error.active,
+        .content.active {
+            display: flex;
+        }
+
+        #loading {
+            font-size: 2em;
+        }
+
+        #error {
+            font-size: 2em;
+            color: red;
         }
 
         .content {
-            display: flex;
             flex-direction: row;
             justify-content: center;
             align-items: center;
@@ -55,12 +71,7 @@
 
         .info h3 {
             font-size: 3vw;
-            /* Dynamically scales with screen size */
             margin: 10px 0;
-        }
-
-        #controls {
-            margin-top: 30px;
         }
 
         .play-icon {
@@ -70,39 +81,16 @@
 
         .material-icons {
             font-size: 8vw;
-            /* Larger icon, responsive to screen size */
             color: white;
             cursor: pointer;
-        }
-
-        button {
-            font-size: 3vw;
-            padding: 15px 30px;
-            background-color: #ff5722;
-            color: white;
-            border: none;
-            border-radius: 8px;
-            cursor: pointer;
-        }
-
-        button:hover {
-            background-color: #e64a19;
-        }
-
-        /* Media queries for large screen devices like TVs */
-        @media (min-width: 1200px) {
-            .info h3 {
-                font-size: 48px;
-            }
-
-            .material-icons {
-                font-size: 100px;
-            }
         }
     </style>
 </head>
 
 <body>
+    <div id="loading" class="active">Loading...</div>
+    <div id="error">Error: Unable to load song data</div>
+
     <div class="content">
         <img id="album-art" src="https://static.qobuz.com/images/covers/6a/gy/x95616fwfgy6a_600.jpg" alt="Album Art">
         <div class="info">
@@ -113,87 +101,115 @@
                 <h3>Samara Joy</h3>
             </div>
         </div>
+        <div class="play-icon">
+            <i class="material-icons">play_circle_outline</i>
+        </div>
     </div>
-    <div class="play-icon">
-        <i class="material-icons">play_circle_outline</i>
-    </div>
+
     <script>
-        const messageDisplay = document.createElement('p');
-        messageDisplay.textContent = 'test:new testes ';
-        document.body.appendChild(messageDisplay);
+        const loadingScreen = document.getElementById('loading');
+        const errorScreen = document.getElementById('error');
+        const contentScreen = document.querySelector('.content');
 
-        // Initialize Cast Receiver Framework
+        const playerSocket = io('http://192.168.1.200:3000/');
+        console.log("12312321312312", io)
+        playerSocket.on("connect", () => {
+            console.log('-> Player connected')
+        })
 
-        const nameSpace = "urn:x-cast:innuos.innuossense.com"
-        const context = cast.framework.CastReceiverContext.getInstance();
-        const testDisplay = document.createElement('p');
-        console.log("Here", context)
-        //testDisplay.textContent = 'teste: ' + JSON.stringify(context);
-        //document.body.appendChild(testDisplay);
-    
-        const playerManager = context.getPlayerManager();
+        playerSocket.on("player_status", newPlayerState => {
+            console.log("salve", newPlayerState)
+            const playerObject = newPlayerState.player_loop['4c:38:d5:15:52:7e'];
+            console.log("salve", playerObject)
 
-        // Optionally set up event handlers for when media loads
-        playerManager.setMessageInterceptor(
-            cast.framework.messages.MessageType.LOAD,
-            (loadRequestData) => {
-                console.log('Load request received:', loadRequestData);
-                const messageDisplayteste = document.createElement('p');
-                messageDisplayteste.textContent = 'Message from sender: ' + JSON.stringify(loadRequestData);
-                document.body.appendChild(messageDisplayteste);
+            if (playerObject && playerObject.track) {
+                const title = playerObject.track.title;
+                const artist = playerObject.track.artist[0]?.name || "Unknown Artist";
+                const cover = playerObject.track.cover;
 
-                // Return the data as-is or modified for further handling
-                return loadRequestData;
+                if (title && artist && cover) {
+                    document.getElementById("song-title").querySelector("h3").textContent = title;
+                    document.getElementById("artist-name").querySelector("h3").textContent = artist;
+                    document.getElementById("album-art").src = cover;
+
+                    loadingScreen.classList.remove('active');
+                    errorScreen.classList.remove('active');
+                    contentScreen.classList.add('active');
+                } else {
+                    showError();
+                }
+            } else {
+                showError();
             }
-        );
-
-
-        context.addCustomMessageListener('urn:x-cast:innuos.innuossense.com', event => {
-            console.log('CustomMessage: ', event);
-
-            // Display the received message on the page (optional)
-            const messageDisplay1 = document.createElement('p');
-            messageDisplay1.textContent = 'Message from sender: ' + JSON.stringify(event);
-            document.body.appendChild(messageDisplay1);
         });
-
-        // Add a custom message listener for the namespace
-        context.addCustomMessageListener(nameSpace, (customEvent) => {
-            console.log('Received message:', customEvent.data);
-
-            // Display the received message on the page (optional)
-            const messageDisplay2 = document.createElement('p');
-            messageDisplay2.textContent = 'Message from sender: ' + JSON.stringify(customEvent.data);
-            document.body.appendChild(messageDisplay2);
-
-            // Additional handling of the message can go here
-        });
-
-        function broadcastTime() {
-            setInterval(() => {
-                const currentTime = new Date().toLocaleTimeString();
-
-                // Send the current time to all connected senders
-                context.getSenders().forEach((sender) => {
-                    context.sendMessage(namespace, {
-                        message: `Current time is: ${currentTime}`
-                    }, sender.id);
-                });
-            }, 1000); // Run every second
-        }
-        broadcastTime()
-
-        // Start the receiver
-        context.start();
         /*
-                const playerSocket = io('http://192.168.1.200:3000/');
+                const messageDisplay = document.createElement('p');
+                messageDisplay.textContent = 'test:new testes ';
+                document.body.appendChild(messageDisplay);
         
-                playerSocket.on("connect", () => {
-                    console.log('-> Player connected')
-                })
-                playerSocket.on("player_status", newPlayerState => {
-                    setPlayingInfo(newPlayerState.player_loop[playerId])
-                });*/
+                // Initialize Cast Receiver Framework
+        
+                const nameSpace = "urn:x-cast:innuos.innuossense.com"
+                const context = cast.framework.CastReceiverContext.getInstance();
+                const testDisplay = document.createElement('p');
+                console.log("Here", context)
+                //testDisplay.textContent = 'teste: ' + JSON.stringify(context);
+                //document.body.appendChild(testDisplay);
+        
+                const playerManager = context.getPlayerManager();
+        
+                // Optionally set up event handlers for when media loads
+                playerManager.setMessageInterceptor(
+                    cast.framework.messages.MessageType.LOAD,
+                    (loadRequestData) => {
+                        console.log('Load request received:', loadRequestData);
+                        const messageDisplayteste = document.createElement('p');
+                        messageDisplayteste.textContent = 'Message from sender: ' + JSON.stringify(loadRequestData);
+                        document.body.appendChild(messageDisplayteste);
+        
+                        // Return the data as-is or modified for further handling
+                        return loadRequestData;
+                    }
+                );
+        
+        
+                context.addCustomMessageListener('urn:x-cast:innuos.innuossense.com', event => {
+                    console.log('CustomMessage: ', event);
+        
+                    // Display the received message on the page (optional)
+                    const messageDisplay1 = document.createElement('p');
+                    messageDisplay1.textContent = 'Message from sender: ' + JSON.stringify(event);
+                    document.body.appendChild(messageDisplay1);
+                });
+        
+                // Add a custom message listener for the namespace
+                context.addCustomMessageListener(nameSpace, (customEvent) => {
+                    console.log('Received message:', customEvent.data);
+        
+                    // Display the received message on the page (optional)
+                    const messageDisplay2 = document.createElement('p');
+                    messageDisplay2.textContent = 'Message from sender: ' + JSON.stringify(customEvent.data);
+                    document.body.appendChild(messageDisplay2);
+        
+                    // Additional handling of the message can go here
+                });
+        
+                function broadcastTime() {
+                    setInterval(() => {
+                        const currentTime = new Date().toLocaleTimeString();
+        
+                        // Send the current time to all connected senders
+                        context.getSenders().forEach((sender) => {
+                            context.sendMessage(namespace, {
+                                message: `Current time is: ${currentTime}`
+                            }, sender.id);
+                        });
+                    }, 1000); // Run every second
+                }
+                broadcastTime()
+        
+                // Start the receiver
+                context.start();*/
 
     </script>
 </body>
