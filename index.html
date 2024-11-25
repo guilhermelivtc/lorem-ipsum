@@ -110,16 +110,16 @@
         const errorScreen = document.getElementById('error');
         const contentScreen = document.querySelector('.content');
 
-        const playerSocket = io('http://192.168.1.200:3000/');
-        console.log("12312321312312", io)
+        // Updated to use HTTPS connection for Socket.IO
+        const playerSocket = io('https://192.168.1.200:3000/'); // Replace with your HTTPS server domain and port
+
         playerSocket.on("connect", () => {
-            console.log('-> Player connected')
-        })
+            console.log('-> Player connected');
+        });
 
         playerSocket.on("player_status", newPlayerState => {
-            console.log("salve", newPlayerState)
+            console.log("Received player status:", newPlayerState);
             const playerObject = newPlayerState.player_loop['4c:38:d5:15:52:7e'];
-            console.log("salve", playerObject)
 
             if (playerObject && playerObject.track) {
                 const title = playerObject.track.title;
@@ -141,75 +141,12 @@
                 showError();
             }
         });
-        /*
-                const messageDisplay = document.createElement('p');
-                messageDisplay.textContent = 'test:new testes ';
-                document.body.appendChild(messageDisplay);
-        
-                // Initialize Cast Receiver Framework
-        
-                const nameSpace = "urn:x-cast:innuos.innuossense.com"
-                const context = cast.framework.CastReceiverContext.getInstance();
-                const testDisplay = document.createElement('p');
-                console.log("Here", context)
-                //testDisplay.textContent = 'teste: ' + JSON.stringify(context);
-                //document.body.appendChild(testDisplay);
-        
-                const playerManager = context.getPlayerManager();
-        
-                // Optionally set up event handlers for when media loads
-                playerManager.setMessageInterceptor(
-                    cast.framework.messages.MessageType.LOAD,
-                    (loadRequestData) => {
-                        console.log('Load request received:', loadRequestData);
-                        const messageDisplayteste = document.createElement('p');
-                        messageDisplayteste.textContent = 'Message from sender: ' + JSON.stringify(loadRequestData);
-                        document.body.appendChild(messageDisplayteste);
-        
-                        // Return the data as-is or modified for further handling
-                        return loadRequestData;
-                    }
-                );
-        
-        
-                context.addCustomMessageListener('urn:x-cast:innuos.innuossense.com', event => {
-                    console.log('CustomMessage: ', event);
-        
-                    // Display the received message on the page (optional)
-                    const messageDisplay1 = document.createElement('p');
-                    messageDisplay1.textContent = 'Message from sender: ' + JSON.stringify(event);
-                    document.body.appendChild(messageDisplay1);
-                });
-        
-                // Add a custom message listener for the namespace
-                context.addCustomMessageListener(nameSpace, (customEvent) => {
-                    console.log('Received message:', customEvent.data);
-        
-                    // Display the received message on the page (optional)
-                    const messageDisplay2 = document.createElement('p');
-                    messageDisplay2.textContent = 'Message from sender: ' + JSON.stringify(customEvent.data);
-                    document.body.appendChild(messageDisplay2);
-        
-                    // Additional handling of the message can go here
-                });
-        
-                function broadcastTime() {
-                    setInterval(() => {
-                        const currentTime = new Date().toLocaleTimeString();
-        
-                        // Send the current time to all connected senders
-                        context.getSenders().forEach((sender) => {
-                            context.sendMessage(namespace, {
-                                message: `Current time is: ${currentTime}`
-                            }, sender.id);
-                        });
-                    }, 1000); // Run every second
-                }
-                broadcastTime()
-        
-                // Start the receiver
-                context.start();*/
 
+        function showError() {
+            loadingScreen.classList.remove('active');
+            contentScreen.classList.remove('active');
+            errorScreen.classList.add('active');
+        }
     </script>
 </body>
 
