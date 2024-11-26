@@ -112,48 +112,7 @@
         const errorScreen = document.getElementById('error');
         const contentScreen = document.querySelector('.content');
 
-        fetch('http://192.168.1.200:8090/api/system/system_details').then(function (r) {
-            return r.json();
-        })
-            .then(data => {
-                console.log("here", data)
-            });
 
-        // Updated to use HTTPS connection for Socket.IO
-        const playerSocket = io('http://192.168.1.200:3000/'); // Replace with your HTTPS server domain and port
-
-        playerSocket.on("connect", () => {
-            console.log('-> Player connected');
-        });
-
-        playerSocket.on("player_status", newPlayerState => {
-            console.log("Received player status:", newPlayerState);
-            const playerObject = newPlayerState.player_loop['4c:38:d5:15:52:7e'];
-
-            if (playerObject && playerObject.track) {
-                const title = playerObject.track.title;
-                const artist = playerObject.track.artist[0]?.name || "Unknown Artist";
-                const cover = playerObject.track.cover;
-                const mode = playerObject.mode;
-
-                if (title && artist && cover) {
-                    document.getElementById("song-title").querySelector("h3").textContent = title;
-                    document.getElementById("artist-name").querySelector("h3").textContent = artist;
-                    document.getElementById("album-art").src = cover;
-                    if (mode == 'stop') {
-                        document.getElementById("icon").querySelector("i").textContent = 'pause_circle_outline';
-                    }
-
-                    loadingScreen.classList.remove('active');
-                    errorScreen.classList.remove('active');
-                    contentScreen.classList.add('active');
-                } else {
-                    showError();
-                }
-            } else {
-                showError();
-            }
-        });
 
         function showError() {
             loadingScreen.classList.remove('active');
@@ -180,6 +139,42 @@
                 const messageDisplayteste = document.createElement('p');
                 messageDisplayteste.textContent = 'Message from sender: ' + JSON.stringify(loadRequestData);
                 document.body.appendChild(messageDisplayteste);
+
+                const ip = loadRequestData.media.customData.playerSocketURL
+                const playerSocket = io(ip);
+                
+                playerSocket.on("connect", () => {
+                    console.log('-> Player connected');
+                });
+
+                playerSocket.on("player_status", newPlayerState => {
+                    console.log("Received player status:", newPlayerState);
+                    const playerObject = newPlayerState.player_loop['4c:38:d5:15:52:7e'];
+
+                    if (playerObject && playerObject.track) {
+                        const title = playerObject.track.title;
+                        const artist = playerObject.track.artist[0]?.name || "Unknown Artist";
+                        const cover = playerObject.track.cover;
+                        const mode = playerObject.mode;
+
+                        if (title && artist && cover) {
+                            document.getElementById("song-title").querySelector("h3").textContent = title;
+                            document.getElementById("artist-name").querySelector("h3").textContent = artist;
+                            document.getElementById("album-art").src = cover;
+                            if (mode == 'stop') {
+                                document.getElementById("icon").querySelector("i").textContent = 'pause_circle_outline';
+                            }
+
+                            loadingScreen.classList.remove('active');
+                            errorScreen.classList.remove('active');
+                            contentScreen.classList.add('active');
+                        } else {
+                            showError();
+                        }
+                    } else {
+                        showError();
+                    }
+                });
 
                 // Return the data as-is or modified for further handling
                 return loadRequestData;
