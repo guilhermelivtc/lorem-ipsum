@@ -229,10 +229,8 @@
             if (playerObject && playerObject.track) {
                 const title = playerObject.track.title;
                 const joinedNames = playerObject.track.artist.map(obj => obj?.name).join(', ') || "Unknown Artist";
-
                 const cover = playerObject.track.cover;
                 const mode = playerObject.mode;
-
 
                 const format = playerObject.track.format.toLowerCase();
                 const bitrate = playerObject.track.bitrate;
@@ -240,11 +238,12 @@
                 const sample_rate = playerObject.track.sample_rate > 1000 ? playerObject.track.sample_rate / 1000 : playerObject.track.sample_rate
                 const source = playerObject.track.source;
 
+
                 if (title && joinedNames && cover) {
                     document.getElementById("song-title").querySelector("div").textContent = title;
                     document.getElementById("artist-name").querySelector("div").textContent = joinedNames;
                     document.getElementById("album-art").src = cover;
-     
+
                     if (format == 'mp3') {
                         document.getElementById("bitdepth-text").querySelector("div").textContent = bitrate + ' kbps CBR';
                         document.getElementById("bitrate-text").querySelector("div").textContent = '';
@@ -259,16 +258,16 @@
                     loadingScreen.classList.remove('active');
                     errorScreen.classList.remove('active');
                     contentScreen.classList.add('active');
-
                 } else {
                     showError();
                 }
             } else {
                 showError();
             }
-        });*/
+        });
 
 
+*/
         const playerManager = context.getPlayerManager();
 
         // Optionally set up event handlers for when media loads
@@ -303,9 +302,7 @@
                             document.getElementById("song-title").querySelector("div").textContent = title;
                             document.getElementById("artist-name").querySelector("div").textContent = joinedNames;
                             document.getElementById("album-art").src = cover;
-                            /*if (mode == 'stop') {
-                                document.getElementById("icon").querySelector("i").textContent = 'pause_circle_outline';
-                            }*/
+
                             if (format == 'mp3') {
                                 document.getElementById("bitdepth-text").querySelector("div").textContent = bitrate + ' kbps CBR';
                                 document.getElementById("bitrate-text").querySelector("div").textContent = '';
@@ -332,6 +329,7 @@
                 return loadRequestData;
             }
         );
+
 
 
         // Start the receiver
