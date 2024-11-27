@@ -287,7 +287,6 @@
             (loadRequestData) => {
                 console.log('Load request received:', loadRequestData);
                 const messageDisplayteste = document.createElement('p');
-                messageDisplayteste.textContent = 'Message from sender: ' + JSON.stringify(loadRequestData);
                 document.body.appendChild(messageDisplayteste);
 
                 const ip = loadRequestData.media.customData.playerSocketURL
@@ -348,27 +347,6 @@
             }
         );
 
-
-        context.addCustomMessageListener('urn:x-cast:innuos.innuossense.com', event => {
-            console.log('CustomMessage: ', event);
-
-            // Display the received message on the page (optional)
-            const messageDisplay1 = document.createElement('p');
-            messageDisplay1.textContent = 'Message from sender: ' + JSON.stringify(event);
-            document.body.appendChild(messageDisplay1);
-        });
-
-        // Add a custom message listener for the namespace
-        context.addCustomMessageListener(nameSpace, (customEvent) => {
-            console.log('Received message:', customEvent.data);
-
-            // Display the received message on the page (optional)
-            const messageDisplay2 = document.createElement('p');
-            messageDisplay2.textContent = 'Message from sender: ' + JSON.stringify(customEvent.data);
-            document.body.appendChild(messageDisplay2);
-
-            // Additional handling of the message can go here
-        });
 
         function broadcastTime() {
             setInterval(() => {
