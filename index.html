@@ -214,7 +214,15 @@
         }
 
         // Initialize Cast Receiver Framework
+
+        const nameSpace = "urn:x-cast:innuos.innuossense.com"
+        const context = cast.framework.CastReceiverContext.getInstance();
+        const testDisplay = document.createElement('p');
+        console.log("Here", context)
+        //testDisplay.textContent = 'teste: ' + JSON.stringify(context);
+        //document.body.appendChild(testDisplay);
 /*
+
         const ip = 'http://192.168.1.200:3000/'
         const playerSocket = io(ip);
 
@@ -229,8 +237,10 @@
             if (playerObject && playerObject.track) {
                 const title = playerObject.track.title;
                 const joinedNames = playerObject.track.artist.map(obj => obj?.name).join(', ') || "Unknown Artist";
+
                 const cover = playerObject.track.cover;
                 const mode = playerObject.mode;
+
 
                 const format = playerObject.track.format.toLowerCase();
                 const bitrate = playerObject.track.bitrate;
@@ -238,11 +248,11 @@
                 const sample_rate = playerObject.track.sample_rate > 1000 ? playerObject.track.sample_rate / 1000 : playerObject.track.sample_rate
                 const source = playerObject.track.source;
 
-
                 if (title && joinedNames && cover) {
                     document.getElementById("song-title").querySelector("div").textContent = title;
                     document.getElementById("artist-name").querySelector("div").textContent = joinedNames;
                     document.getElementById("album-art").src = cover;
+
 
                     if (format == 'mp3') {
                         document.getElementById("bitdepth-text").querySelector("div").textContent = bitrate + ' kbps CBR';
@@ -258,6 +268,7 @@
                     loadingScreen.classList.remove('active');
                     errorScreen.classList.remove('active');
                     contentScreen.classList.add('active');
+
                 } else {
                     showError();
                 }
@@ -265,15 +276,18 @@
                 showError();
             }
         });
-
-
 */
+
         const playerManager = context.getPlayerManager();
 
         // Optionally set up event handlers for when media loads
         playerManager.setMessageInterceptor(
             cast.framework.messages.MessageType.LOAD,
             (loadRequestData) => {
+                console.log('Load request received:', loadRequestData);
+                const messageDisplayteste = document.createElement('p');
+                document.body.appendChild(messageDisplayteste);
+
                 const ip = loadRequestData.media.customData.playerSocketURL
                 const playerSocket = io(ip);
 
@@ -302,7 +316,9 @@
                             document.getElementById("song-title").querySelector("div").textContent = title;
                             document.getElementById("artist-name").querySelector("div").textContent = joinedNames;
                             document.getElementById("album-art").src = cover;
-
+                            /*if (mode == 'stop') {
+                                document.getElementById("icon").querySelector("i").textContent = 'pause_circle_outline';
+                            }*/
                             if (format == 'mp3') {
                                 document.getElementById("bitdepth-text").querySelector("div").textContent = bitrate + ' kbps CBR';
                                 document.getElementById("bitrate-text").querySelector("div").textContent = '';
@@ -317,6 +333,7 @@
                             loadingScreen.classList.remove('active');
                             errorScreen.classList.remove('active');
                             contentScreen.classList.add('active');
+
                         } else {
                             showError();
                         }
@@ -331,6 +348,19 @@
         );
 
 
+        function broadcastTime() {
+            setInterval(() => {
+                const currentTime = new Date().toLocaleTimeString();
+
+                // Send the current time to all connected senders
+                context.getSenders().forEach((sender) => {
+                    context.sendMessage(namespace, {
+                        message: `Current time is: ${currentTime}`
+                    }, sender.id);
+                });
+            }, 1000); // Run every second
+        }
+        broadcastTime()
 
         // Start the receiver
         context.start();
