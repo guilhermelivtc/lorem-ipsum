@@ -10,7 +10,11 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.8.1/socket.io.js"
         integrity="sha512-8BHxHDLsOHx+flIrQ0DrZcea7MkHqRU5GbTHmbdzMRnAaoCIkZ97PqZcXJkKZckMMhqfoeaJE+DNUVuyoQsO3Q=="
         crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap"
+        rel="stylesheet">
     <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
     <style>
         body {
@@ -50,15 +54,12 @@
             flex-direction: row;
             justify-content: center;
             align-items: center;
-            width: 90%;
-            max-width: 1200px;
+            gap: 5vw;
         }
 
         #album-art {
-            width: 60%;
-            max-width: 400px;
+            width: 50%;
             height: auto;
-            border-radius: 12px;
         }
 
         .info {
@@ -70,9 +71,23 @@
             max-width: 50%;
         }
 
-        .info h3 {
-            font-size: 3vw;
-            margin: 10px 0;
+        .info div {
+            margin: 0.1em 0;
+        }
+
+        .song-title {
+            font-size: 2.2rem;
+            font-weight: 600;
+        }
+
+        .artist-name {
+            font-size: 2.2rem;
+            font-weight: 300;
+        }
+
+        .album-name {
+            font-size: 1.8rem;
+            font-weight: 300;
         }
 
         .play-icon {
@@ -85,6 +100,46 @@
             color: white;
             cursor: pointer;
         }
+
+        .quality-and-source {
+            display: flex;
+            gap: 8px;
+            flex-direction: row;
+            align-items: center;
+        }
+
+        .bit-sample-rate {
+            display: flex;
+            gap: 2px;
+            flex-direction: column;
+        }
+
+        .source-icon {
+            color: white;
+            border: 1px solid white;
+            height: 11px;
+            padding: 2px 7px;
+            font-size: 0.7em;
+            text-align: center;
+            width: auto;
+            margin-left: 7px;
+            border-radius: 20px;
+            margin: 0 !important;
+            line-height: 11px;
+        }
+
+        .rate-text {
+            font-size: 0.5em;
+            line-height: 9px;
+            margin: 0;
+            color: white;
+            text-align: left;
+        }
+
+        .source-img {
+            width: 1.5em;
+            height: 1.5em;
+        }
     </style>
 </head>
 
@@ -95,16 +150,35 @@
     <div class="content">
         <img id="album-art" src="https://static.qobuz.com/images/covers/6a/gy/x95616fwfgy6a_600.jpg" alt="Album Art">
         <div class="info">
-            <div id="song-title">
-                <h3>Can't Get Out Of This Mood</h3>
+            <div class="song-title" id="song-title">
+                <div>Can't Get Out Of This Mood</div>
             </div>
-            <div id="artist-name">
-                <h3>Samara Joy</h3>
+            <div class="artist-name" id="artist-name">
+                <div>Samara Joy</div>
+            </div>
+            <div class="album-name" id="artist-name">
+                <div>Samara Joy</div>
+            </div>
+            <div class="quality-and-source">
+                <img id="source-img" class="source-img" src="" alt="Source Image">
+                <div class="source-icon" id="source-icon">
+                    <div>FLAC</div>
+                </div>
+                <div class="bit-sample-rate" id="artist-name">
+                    <div class="rate-text" id="bitdepth-text">
+                        <div>16 bit</div>
+                    </div>
+                    <div class="rate-text" id="bitrate-text">
+                        <div>44.1 kHz</div>
+                    </div>
+                </div>
             </div>
         </div>
-        <div class="play-icon" id="icon">
+        <!--         <div class="play-icon" id="icon">
             <i class="material-icons">play_circle_outline</i>
-        </div>
+        </div> -->
+
+
     </div>
 
     <script>
@@ -120,6 +194,25 @@
             errorScreen.classList.add('active');
         }
 
+        function selectSourceImage(source) {
+            switch (source.toUpperCase()) {
+                case 'TIDAL': return './images/tidal.png'; break;
+                case 'TCONNECT': return './images/tidal_connect.png'; break;
+                case 'DEEZER': return './images/deezer.png'; break;
+                case 'AMAZON': return './images/amazon.png'; break;
+                case 'QOBUZ': return './images/qobuz.png'; break;
+                case 'IDAGIO': return './images/idagio.png'; break;
+                case 'ROON': return './images/roon.png'; break;
+                case 'HIGHRESAUDIO': return './images/highresaudio.jpg'; break;
+                case 'NAS': return './images/dns.png'; break;
+                case 'USB': return './images/usb.png'; break;
+                case 'RADIO': return './images/radio.png'; break;
+                case 'PODCASTS': return './images/podcasts.png'; break;
+                case 'AIRPLAY': return './images/apple.png'; break;
+                default: return './images/library.png';
+            }
+        }
+
         // Initialize Cast Receiver Framework
 
         const nameSpace = "urn:x-cast:innuos.innuossense.com"
@@ -128,6 +221,63 @@
         console.log("Here", context)
         //testDisplay.textContent = 'teste: ' + JSON.stringify(context);
         //document.body.appendChild(testDisplay);
+
+
+        const ip = 'http://192.168.1.200:3000/'
+        const playerSocket = io(ip);
+
+        playerSocket.on("connect", () => {
+            console.log('-> Player connected');
+        });
+
+        playerSocket.on("player_status", newPlayerState => {
+            console.log("Received player status:", newPlayerState);
+            const playerObject = newPlayerState.player_loop['4c:38:d5:15:52:7e'];
+
+            if (playerObject && playerObject.track) {
+                const title = playerObject.track.title;
+                const joinedNames = playerObject.track.artist.map(obj => obj?.name).join(', ') || "Unknown Artist";
+
+                const cover = playerObject.track.cover;
+                const mode = playerObject.mode;
+
+
+                const format = playerObject.track.format.toLowerCase();
+                const bitrate = playerObject.track.bitrate;
+                const bitdepth = playerObject.track.bitdepth;
+                const sample_rate = playerObject.track.sample_rate > 1000 ? playerObject.track.sample_rate / 1000 : playerObject.track.sample_rate
+                const source = playerObject.track.source;
+
+                if (title && joinedNames && cover) {
+                    document.getElementById("song-title").querySelector("div").textContent = title;
+                    document.getElementById("artist-name").querySelector("div").textContent = joinedNames;
+                    document.getElementById("album-art").src = cover;
+                    /*if (mode == 'stop') {
+                        document.getElementById("icon").querySelector("i").textContent = 'pause_circle_outline';
+                    }*/
+                    if (format == 'mp3') {
+                        document.getElementById("bitdepth-text").querySelector("div").textContent = bitrate + ' kbps CBR';
+                        document.getElementById("bitrate-text").querySelector("div").textContent = '';
+                    } else if (['flac', 'wav'].includes(format)) {
+                        document.getElementById("bitdepth-text").querySelector("div").textContent = (bitdepth || 16) + ' bit';
+                        document.getElementById("bitrate-text").querySelector("div").textContent = sample_rate + ' kHz';
+                    }
+
+                    const srcImg = selectSourceImage(source);
+                    document.getElementById("source-img").src = srcImg;
+
+                    loadingScreen.classList.remove('active');
+                    errorScreen.classList.remove('active');
+                    contentScreen.classList.add('active');
+
+                } else {
+                    showError();
+                }
+            } else {
+                showError();
+            }
+        });
+
 
         const playerManager = context.getPlayerManager();
 
@@ -142,7 +292,7 @@
 
                 const ip = loadRequestData.media.customData.playerSocketURL
                 const playerSocket = io(ip);
-                
+
                 playerSocket.on("connect", () => {
                     console.log('-> Player connected');
                 });
@@ -153,17 +303,34 @@
 
                     if (playerObject && playerObject.track) {
                         const title = playerObject.track.title;
-                        const artist = playerObject.track.artist[0]?.name || "Unknown Artist";
+                        const joinedNames = playerObject.track.artist.map(obj => obj?.name).join(', ') || "Unknown Artist";
                         const cover = playerObject.track.cover;
                         const mode = playerObject.mode;
 
-                        if (title && artist && cover) {
-                            document.getElementById("song-title").querySelector("h3").textContent = title;
-                            document.getElementById("artist-name").querySelector("h3").textContent = artist;
+                        const format = playerObject.track.format.toLowerCase();
+                        const bitrate = playerObject.track.bitrate;
+                        const bitdepth = playerObject.track.bitdepth;
+                        const sample_rate = playerObject.track.sample_rate > 1000 ? playerObject.track.sample_rate / 1000 : playerObject.track.sample_rate
+                        const source = playerObject.track.source;
+
+
+                        if (title && joinedNames && cover) {
+                            document.getElementById("song-title").querySelector("div").textContent = title;
+                            document.getElementById("artist-name").querySelector("div").textContent = joinedNames;
                             document.getElementById("album-art").src = cover;
-                            if (mode == 'stop') {
+                            /*if (mode == 'stop') {
                                 document.getElementById("icon").querySelector("i").textContent = 'pause_circle_outline';
+                            }*/
+                            if (format == 'mp3') {
+                                document.getElementById("bitdepth-text").querySelector("div").textContent = bitrate + ' kbps CBR';
+                                document.getElementById("bitrate-text").querySelector("div").textContent = '';
+                            } else if (['flac', 'wav'].includes(format)) {
+                                document.getElementById("bitdepth-text").querySelector("div").textContent = (bitdepth || 16) + ' bit';
+                                document.getElementById("bitrate-text").querySelector("div").textContent = sample_rate + ' kHz';
                             }
+
+                            const srcImg = selectSourceImage(source);
+                            document.getElementById("source-img").src = srcImg;
 
                             loadingScreen.classList.remove('active');
                             errorScreen.classList.remove('active');
