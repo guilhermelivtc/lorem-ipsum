@@ -13,12 +13,12 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link
-        href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap"
+        href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap"
         rel="stylesheet">
     <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
     <style>
         body {
-            font-family: 'Roboto', sans-serif;
+            font-family: 'Montserrat', sans-serif;
             background-color: #1a1a1a;
             color: white;
             margin: 0;
@@ -50,6 +50,13 @@
             color: red;
         }
 
+        .container {
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            height: 100vh;
+        }
+
         .content {
             flex-direction: row;
             justify-content: center;
@@ -58,8 +65,7 @@
         }
 
         #album-art {
-            width: 50%;
-            height: auto;
+            height: 60vh;
         }
 
         .info {
@@ -140,6 +146,46 @@
             width: 1.5em;
             height: 1.5em;
         }
+
+        .header-title {
+            font-size: 2em;
+            margin: 40px 8px;
+            color: white;
+            display: flex;
+            align-items: center;
+            width: 95vw;
+        }
+
+        .sense-logo {
+            height: 2em;
+            margin-left: 0.6em;
+        }
+
+        .elapsed-time {
+            font-size: 1.4em;
+            margin: 40px 8px;
+            color: white;
+            display: flex;
+            align-items: center;
+            width: 95vw;
+        }
+
+        .track-progress {
+            height: 0.4em;
+            width: 100%;
+            display: inline-flex;
+            margin: 0 1em;
+        }
+
+        .track-time-remaning {
+            width: 100%;
+            background-color: white;
+        }
+
+        .track-time-complete {
+            width: 100px;
+            background-color: rgb(209, 169, 124);
+        }
     </style>
 </head>
 
@@ -147,36 +193,53 @@
     <div id="loading" class="active">Loading...</div>
     <div id="error">Error: Unable to load song data</div>
 
-    <div class="content">
-        <img id="album-art" src="https://static.qobuz.com/images/covers/6a/gy/x95616fwfgy6a_600.jpg" alt="Album Art">
-        <div class="info">
-            <div class="song-title" id="song-title">
-                <div>Can't Get Out Of This Mood</div>
-            </div>
-            <div class="artist-name" id="artist-name">
-                <div>Samara Joy</div>
-            </div>
-            <div class="album-name" id="artist-name">
-                <div>Samara Joy</div>
-            </div>
-            <div class="quality-and-source">
-                <img id="source-img" class="source-img" src="" alt="Source Image">
-                <div class="source-icon" id="source-icon">
-                    <div>FLAC</div>
+    <div id="container" class="container">
+        <div class="header-title">
+            PLAYING FROM
+            <img class="sense-logo" src="./images/innuos.png" alt="Innuos Sense">
+        </div>
+        <div class="content">
+            <img id="album-art" alt="Album Art">
+            <div class="info">
+                <div class="song-title" id="song-title">
+                    <div></div>
                 </div>
-                <div class="bit-sample-rate" id="artist-name">
-                    <div class="rate-text" id="bitdepth-text">
-                        <div>16 bit</div>
+                <div class="artist-name" id="artist-name">
+                    <div></div>
+                </div>
+                <div class="album-name" id="album-name">
+                    <div></div>
+                </div>
+                <div class="quality-and-source">
+                    <img id="source-img" class="source-img" src="" alt="Source Image">
+                    <div class="source-icon" id="source-icon">
+                        <div></div>
                     </div>
-                    <div class="rate-text" id="bitrate-text">
-                        <div>44.1 kHz</div>
+                    <div class="bit-sample-rate" id="artist-name">
+                        <div class="rate-text" id="bitdepth-text">
+                            <div></div>
+                        </div>
+                        <div class="rate-text" id="bitrate-text">
+                            <div></div>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
-        <!--         <div class="play-icon" id="icon">
-            <i class="material-icons">play_circle_outline</i>
-        </div> -->
+        <div class="elapsed-time">
+            <div id="current-track-time">
+                <div> </div>
+            </div>
+
+
+            <div class="track-progress">
+                <div class="track-time-complete" id="track-time-complete"> </div>
+                <div class="track-time-remaning" id="track-time-remaning"> </div>
+            </div>
+            <div id="current-track-total-time">
+                <div> </div>
+            </div>
+        </div>
 
 
     </div>
@@ -186,6 +249,7 @@
         const errorScreen = document.getElementById('error');
         const contentScreen = document.querySelector('.content');
 
+        let currentInterval = null;
 
 
         function showError() {
@@ -214,135 +278,190 @@
         }
 
         // Initialize Cast Receiver Framework
-
         const context = cast.framework.CastReceiverContext.getInstance();
-        console.log("Here", context)
-        /*
-        
-                const ip = 'http://192.168.1.200:3000/'
-                const playerSocket = io(ip);
-        
-                playerSocket.on("connect", () => {
-                    console.log('-> Player connected');
-                });
-        
-                playerSocket.on("player_status", newPlayerState => {
-                    console.log("Received player status:", newPlayerState);
-                    const playerObject = newPlayerState.player_loop['4c:38:d5:15:52:7e'];
-        
-                    if (playerObject && playerObject.track) {
-                        const title = playerObject.track.title;
-                        const joinedNames = playerObject.track.artist.map(obj => obj?.name).join(', ') || "Unknown Artist";
-        
-                        const cover = playerObject.track.cover;
-                        const mode = playerObject.mode;
-        
-        
-                        const format = playerObject.track.format.toLowerCase();
-                        const bitrate = playerObject.track.bitrate;
-                        const bitdepth = playerObject.track.bitdepth;
-                        const sample_rate = playerObject.track.sample_rate > 1000 ? playerObject.track.sample_rate / 1000 : playerObject.track.sample_rate
-                        const source = playerObject.track.source;
-        
-                        if (title && joinedNames && cover) {
-                            document.getElementById("song-title").querySelector("div").textContent = title;
-                            document.getElementById("artist-name").querySelector("div").textContent = joinedNames;
-                            document.getElementById("album-art").src = cover;
-        
-        
-                            if (format == 'mp3') {
-                                document.getElementById("bitdepth-text").querySelector("div").textContent = bitrate + ' kbps CBR';
-                                document.getElementById("bitrate-text").querySelector("div").textContent = '';
-                            } else if (['flac', 'wav'].includes(format)) {
-                                document.getElementById("bitdepth-text").querySelector("div").textContent = (bitdepth || 16) + ' bit';
-                                document.getElementById("bitrate-text").querySelector("div").textContent = sample_rate + ' kHz';
-                            }
-        
-                            const srcImg = selectSourceImage(source);
-                            document.getElementById("source-img").src = srcImg;
-        
-                            loadingScreen.classList.remove('active');
-                            errorScreen.classList.remove('active');
-                            contentScreen.classList.add('active');
-        
-                        } else {
-                            showError();
-                        }
-                    } else {
-                        showError();
-                    }
-                });
-        */
 
-        const playerManager = context.getPlayerManager();
+        function updateTimeDisplay(initialTime, totalTime) {
+            clearInterval(currentInterval); // Stop any previous interval
+            let currentTime = initialTime;
+        
+            var totalSeconds = convertTimeStringToSeconds(totalTime); 
+
+            // Update the time display immediately
+            document.getElementById("current-track-time").textContent = formatTime(currentTime);
+            showTimeOnProgressBar(currentTime, totalTime)
+            // Start a new interval to update every second
+            currentInterval = setInterval(() => {
+                if (currentTime < totalSeconds) {
+                    currentTime += 1; // Increment the time by 1 second
+                    showTimeOnProgressBar(currentTime, totalTime)
+                    document.getElementById("current-track-time").textContent = formatTime(currentTime);
+                }
+            }, 1000);
+        }
+
+        function formatTime(seconds) {
+            const wholeSeconds = Math.floor(seconds); // Remove fractional part
+            const mins = Math.floor(wholeSeconds / 60).toString().padStart(2, "0");
+            const secs = (wholeSeconds % 60).toString().padStart(2, "0");
+            return `${mins}:${secs}`;
+        }
+
+        function convertTimeStringToSeconds(timeString) {
+            const [mins, secs] = timeString.split(':').map(Number); // Split string and convert to numbers
+            return mins * 60 + secs;
+        }
+
+        function showTimeOnProgressBar(seconds, totalTime) {
+            const totalTimeFormatted = convertTimeStringToSeconds(totalTime)
+            const progressPercentage = (seconds / totalTimeFormatted) * 100;
+            const progressBar = document.getElementById("track-time-complete");
+            const remainingBar = document.getElementById("track-time-remaning");
+            progressBar.style.width = `${progressPercentage}%`; // Set the width based on the progress percentage
+            remainingBar.style.width = `${100 - progressPercentage}%`; // Set the width based on the progress percentage
+        }
+
+        const ip = 'http://192.168.1.200:3000/'
+        const playerSocket = io(ip);
+
+        playerSocket.on("error", (error) => {
+            showError()
+        });
+
+        playerSocket.on("connect", () => {
+            console.log('-> Player connected');
+        });
+
+        playerSocket.on("player_status", newPlayerState => {
+            console.log("Received player status:", newPlayerState);
+            const playerObject = newPlayerState.player_loop['4c:38:d5:15:52:7e'];
+
+            if (playerObject && playerObject.track) {
+                const title = playerObject.track.title;
+                const joinedNames = playerObject.track.artist.map(obj => obj?.name).join(', ') || "Unknown Artist";
+                const albumName = playerObject.track.album;
+
+                const cover = playerObject.track.cover;
+                const mode = playerObject.mode;
+                const playerTime = playerObject.time;
+                const trackLength = playerObject.track.length;
+
+                if (playerObject.mode == 'stop') {
+                    clearInterval(currentInterval);
+                    document.getElementById("current-track-time").textContent = formatTime(playerTime);
+                    showTimeOnProgressBar(playerTime, trackLength)
+                } else if (playerObject.mode == 'play') {
+                    updateTimeDisplay(playerTime, trackLength)
+                }
+
+                const format = playerObject.track.format.toLowerCase();
+                const bitrate = playerObject.track.bitrate;
+                const bitdepth = playerObject.track.bitdepth;
+                const sample_rate = playerObject.track.sample_rate > 1000 ? playerObject.track.sample_rate / 1000 : playerObject.track.sample_rate
+                const source = playerObject.track.source;
+
+                if (title && joinedNames && cover) {
+                    document.getElementById("song-title").querySelector("div").textContent = title;
+                    document.getElementById("artist-name").querySelector("div").textContent = joinedNames;
+                    document.getElementById("album-name").querySelector("div").textContent = albumName;
+                    document.getElementById("album-art").src = cover;
+
+                    if (format == 'mp3') {
+                        document.getElementById("bitdepth-text").querySelector("div").textContent = bitrate + ' kbps CBR';
+                        document.getElementById("bitrate-text").querySelector("div").textContent = '';
+                    } else if (['flac', 'wav'].includes(format)) {
+                        document.getElementById("bitdepth-text").querySelector("div").textContent = (bitdepth || 16) + ' bit';
+                        document.getElementById("bitrate-text").querySelector("div").textContent = sample_rate + ' kHz';
+                    }
+                    document.getElementById("source-icon").querySelector("div").textContent = format.toUpperCase();
+
+                    const srcImg = selectSourceImage(source);
+                    document.getElementById("source-img").src = srcImg;
+
+                    document.getElementById("current-track-total-time").querySelector("div").textContent = trackLength;
+                    loadingScreen.classList.remove('active');
+                    errorScreen.classList.remove('active');
+                    contentScreen.classList.add('active');
+
+                } else {
+                    showError();
+                }
+            } else {
+                showError();
+            }
+        });
+
+
+        // const playerManager = context.getPlayerManager();
 
         // Optionally set up event handlers for when media loads
-        playerManager.setMessageInterceptor(
-            cast.framework.messages.MessageType.LOAD,
-            (loadRequestData) => {
-                const ip = loadRequestData.media.customData.playerSocketURL
-                const playerSocket = io(ip);
+        /* playerManager.setMessageInterceptor(
+             cast.framework.messages.MessageType.LOAD,
+             (loadRequestData) => {
+                 const ip = loadRequestData.media.customData.playerSocketURL
+                 const playerSocket = io(ip);
 
-                playerSocket.on("connect", () => {
-                    console.log('-> Player connected');
-                });
+                 playerSocket.on("connect", () => {
+                     console.log('-> Player connected');
+                 });
 
-                playerSocket.on("player_status", newPlayerState => {
-                    console.log("Received player status:", newPlayerState);
-                    const playerObject = newPlayerState.player_loop['4c:38:d5:15:52:7e'];
+                 playerSocket.on("player_status", newPlayerState => {
+                     console.log("Received player status:", newPlayerState);
+                     const playerObject = newPlayerState.player_loop['4c:38:d5:15:52:7e'];
 
-                    if (playerObject && playerObject.track) {
-                        const title = playerObject.track.title;
-                        const joinedNames = playerObject.track.artist.map(obj => obj?.name).join(', ') || "Unknown Artist";
-                        const cover = playerObject.track.cover;
-                        const mode = playerObject.mode;
+                     if (playerObject && playerObject.track) {
+                         const title = playerObject.track.title;
+                         const joinedNames = playerObject.track.artist.map(obj => obj?.name).join(', ') || "Unknown Artist";
+                         const albumName = playerObject.track.album;
+                         const cover = playerObject.track.cover;
+                         const mode = playerObject.mode;
 
-                        const format = playerObject.track.format.toLowerCase();
-                        const bitrate = playerObject.track.bitrate;
-                        const bitdepth = playerObject.track.bitdepth;
-                        const sample_rate = playerObject.track.sample_rate > 1000 ? playerObject.track.sample_rate / 1000 : playerObject.track.sample_rate
-                        const source = playerObject.track.source;
+                         const format = playerObject.track.format.toLowerCase();
+                         const bitrate = playerObject.track.bitrate;
+                         const bitdepth = playerObject.track.bitdepth;
+                         const sample_rate = playerObject.track.sample_rate > 1000 ? playerObject.track.sample_rate / 1000 : playerObject.track.sample_rate
+                         const source = playerObject.track.source;
 
 
-                        if (title && joinedNames && cover) {
-                            document.getElementById("song-title").querySelector("div").textContent = title;
-                            document.getElementById("artist-name").querySelector("div").textContent = joinedNames;
-                            document.getElementById("album-art").src = cover;
-                            /*if (mode == 'stop') {
-                                document.getElementById("icon").querySelector("i").textContent = 'pause_circle_outline';
-                            }*/
-                            if (format == 'mp3') {
-                                document.getElementById("bitdepth-text").querySelector("div").textContent = bitrate + ' kbps CBR';
-                                document.getElementById("bitrate-text").querySelector("div").textContent = '';
-                            } else if (['flac', 'wav'].includes(format)) {
-                                document.getElementById("bitdepth-text").querySelector("div").textContent = (bitdepth || 16) + ' bit';
-                                document.getElementById("bitrate-text").querySelector("div").textContent = sample_rate + ' kHz';
-                            }
+                         if (title && joinedNames && cover) {
+                             document.getElementById("song-title").querySelector("div").textContent = title;
+                             document.getElementById("artist-name").querySelector("div").textContent = joinedNames;
 
-                            const srcImg = selectSourceImage(source);
-                            document.getElementById("source-img").src = srcImg;
+                             document.getElementById("album-art").src = cover;
+                             document.getElementById("source-icon").querySelector("div").textContent = format;
 
-                            loadingScreen.classList.remove('active');
-                            errorScreen.classList.remove('active');
-                            contentScreen.classList.add('active');
+                             if (format == 'mp3') {
+                                 document.getElementById("bitdepth-text").querySelector("div").textContent = bitrate + ' kbps CBR';
+                                 document.getElementById("bitrate-text").querySelector("div").textContent = '';
+                             } else if (['flac', 'wav'].includes(format)) {
+                                 document.getElementById("bitdepth-text").querySelector("div").textContent = (bitdepth || 16) + ' bit';
+                                 document.getElementById("bitrate-text").querySelector("div").textContent = sample_rate + ' kHz';
+                             }
+                             document.getElementById("source-icon").querySelector("div").textContent = format.toUpperCase();
 
-                        } else {
-                            showError();
-                        }
-                    } else {
-                        showError();
-                    }
-                });
+                             const srcImg = selectSourceImage(source);
+                             document.getElementById("source-img").src = srcImg;
 
-                // Return the data as-is or modified for further handling
-                return loadRequestData;
-            }
-        );
+                             loadingScreen.classList.remove('active');
+                             errorScreen.classList.remove('active');
+                             contentScreen.classList.add('active');
+
+                         } else {
+                             showError();
+                         }
+                     } else {
+                         showError();
+                     }
+                 });
+
+                 // Return the data as-is or modified for further handling
+                 return loadRequestData;
+             }
+         );*/
 
 
 
         // Start the receiver
-        context.start();
+        // context.start();
     </script>
 </body>
 
