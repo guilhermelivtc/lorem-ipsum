@@ -323,7 +323,7 @@
             (loadRequestData) => {
                 const ip = loadRequestData.media.customData.playerSocketURL
                 const playerSocket = io(ip);
-                
+
                 playerSocket.on("error", (error) => {
                     showError()
                 });
@@ -403,7 +403,7 @@
 
 
         // Start the receiver
-        // context.start();
+        context.start();
     </script>
 </body>
 
