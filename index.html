@@ -211,6 +211,7 @@
             flex-direction: row;
             justify-content: space-between;
             width: 100%;
+            position: relative;
         }
 
         .empty-state {
@@ -218,6 +219,11 @@
             flex-direction: column;
             align-items: center;
             gap: 1em;
+        }
+
+        .sense-logo {
+            position: absolute;
+            left: 50%;
         }
     </style>
 </head>
@@ -302,8 +308,7 @@
         const contentScreen = document.getElementById('container');
 
         let currentInterval = null;
-
-
+    
         function showError() {
             loadingScreen.classList.remove('active');
             contentScreen.classList.remove('active');
@@ -389,6 +394,11 @@
             remainingBar.style.width = `${100 - progressPercentage}%`; // Set the width based on the progress percentage
         }
 
+        let connectionTimeout = setTimeout(() => {
+            showError()
+        }, 30000);
+
+        showLoading();
         const playerManager = context.getPlayerManager();
 
         playerManager.setMessageInterceptor(
@@ -396,6 +406,10 @@
             (loadRequestData) => {
                 const ip = loadRequestData.media.customData.playerSocketURL
                 const playerId = loadRequestData.media.customData.playerId
+                if (!ip || !playerId) {
+                    showError()
+                }
+                clearTimeout(connectionTimeout);
                 const playerSocket = io(ip);
 
                 playerSocket.on("error", (error) => {
@@ -467,6 +481,8 @@
                         } else {
                             showError();
                         }
+                    } else {
+                        showEmptyState()
                     }
                 })
                 // Return the data as-is or modified for further handling
