@@ -176,9 +176,15 @@
             align-items: center;
         }
 
+        .player-volume {
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+        }
+
         .elapsed-time {
             font-size: 1.4em;
-            margin: 2em 0;
+            margin: 1em 0;
             color: white;
             display: flex;
             align-items: center;
@@ -211,8 +217,16 @@
         .over-time-container {
             display: flex;
             flex-direction: row;
-            justify-content: flex-end;
+            justify-content: center;
             width: 100%;
+        }
+
+        .under-time-container {
+            display: flex;
+            flex-direction: row;
+            justify-content: space-between;
+            width: 100%;
+            margin-bottom: 1em;
         }
 
         .empty-state {
@@ -252,6 +266,10 @@
                 <div class="album-name" id="album-name">
                     <div></div>
                 </div>
+            </div>
+        </div>
+        <div class="track-progress-and-logo">
+            <div class="over-time-container">
                 <div class="quality-and-source">
                     <img id="source-img" class="source-img" src="" alt="Source Image">
                     <div class="source-icon" id="source-icon">
@@ -265,14 +283,6 @@
                             <div></div>
                         </div>
                     </div>
-                </div>
-            </div>
-        </div>
-        <div class="track-progress-and-logo">
-            <div class="over-time-container">
-                <div class="player-name" id="player-name-active">
-                    <i class="material-icons">speaker_outline</i>
-                    <div></div>
                 </div>
             </div>
             <div class="elapsed-time">
@@ -290,7 +300,16 @@
                     <div> </div>
                 </div>
             </div>
-
+            <div class="under-time-container">
+                <div class="player-name" id="player-name-active">
+                    <i class="material-icons">speaker_outline</i>
+                    <div></div>
+                </div>
+                <div class="player-volume" id="player-volume">
+                    <i class="material-icons">volume_up</i>
+                    <div></div>
+                </div>
+            </div>
         </div>
 
 
@@ -437,6 +456,7 @@
                         const trackLength = playerObject.track.length;
                         const trackLengthInSeconds = playerObject.track.length_in_seconds;
                         const source = playerObject.track.source;
+                        const volume = playerObject.volume;
 
                         if (source.toUpperCase() !== 'RADIO') {
                             if (playerObject.mode == 'stop') {
@@ -480,6 +500,8 @@
                             if (source.toUpperCase() !== 'RADIO')
                                 document.getElementById("current-track-total-time").querySelector("div").textContent = trackLength;
 
+                            document.getElementById("player-volume").querySelector("div").textContent = volume;
+
                             showContent()
 
                         } else {
@@ -489,40 +511,15 @@
                         showEmptyState()
                     }
                 })
-
-                // Return the data as-is or modified for further handling
                 return loadRequestData;
             }
         );
-
-
-        var idleTime = 0;
-        const CUSTOM_CHANNEL = 'urn:x-cast:innuos';
-
-        context.addCustomMessageListener(CUSTOM_CHANNEL, function (customEvent) {
-            var eventData = customEvent.data;
-            parseCommand(eventData);
-            idleTime = 0;
-        });
-
-
         const options = new cast.framework.CastReceiverOptions();
-
         options.disableIdleTimeout = true;
 
-        context.start(options);
-
-        var idleInterval = setInterval(timerIncrement, 60000); // 1 minute
-
-        function timerIncrement() {
-            idleTime = idleTime + 1;
-            if (idleTime > 4) { // 5 minutes
-                context.stop();
-            }
-        }
 
         // Start the receiver
-        context.start();
+        context.start(options);
     </script>
 </body>
 
