@@ -151,17 +151,18 @@
 
         .header-title {
             font-size: 2em;
-            margin: 40px 8px;
+            margin: 2em 0;
             color: white;
             display: flex;
             align-items: center;
-            width: 95vw;
+            width: 100vw;
+            flex-direction: column;
         }
 
         .sense-logo {
-            width: 9em;
+            width: 4em;
             height: fit-content;
-            align-self: flex-end;
+            align-self: center;
         }
 
         .sense-logo-empty-state {
@@ -177,11 +178,11 @@
 
         .elapsed-time {
             font-size: 1.4em;
-            margin: 2em 1em;
+            margin: 2em 0;
             color: white;
             display: flex;
             align-items: center;
-            width: 95vw;
+            width: 100%;
         }
 
         .track-progress-and-logo {
@@ -189,6 +190,7 @@
             flex-direction: column;
             align-items: center;
             width: 100%;
+            padding: 0em 1em;
         }
 
         .track-progress {
@@ -209,9 +211,8 @@
         .over-time-container {
             display: flex;
             flex-direction: row;
-            justify-content: space-between;
+            justify-content: flex-end;
             width: 100%;
-            position: relative;
         }
 
         .empty-state {
@@ -219,11 +220,6 @@
             flex-direction: column;
             align-items: center;
             gap: 1em;
-        }
-
-        .sense-logo {
-            position: absolute;
-            left: 50%;
         }
     </style>
 </head>
@@ -242,6 +238,7 @@
 
     <div id="container" class="container">
         <div class="header-title">
+            <img class="sense-logo" src="./images/innuos.png" alt="Innuos Sense">
         </div>
         <div class="content">
             <img id="album-art" alt="Album Art">
@@ -273,8 +270,6 @@
         </div>
         <div class="track-progress-and-logo">
             <div class="over-time-container">
-                <div> </div>
-                <img class="sense-logo" src="./images/innuos.png" alt="Innuos Sense">
                 <div class="player-name" id="player-name-active">
                     <i class="material-icons">speaker_outline</i>
                     <div></div>
@@ -308,7 +303,7 @@
         const contentScreen = document.getElementById('container');
 
         let currentInterval = null;
-    
+
         function showError() {
             loadingScreen.classList.remove('active');
             contentScreen.classList.remove('active');
@@ -421,9 +416,10 @@
                 });
 
                 playerSocket.on("player_status", newPlayerState => {
+                    clearTimeout(connectionTimeout);
                     console.log("Received player status:", newPlayerState);
                     const playerObject = newPlayerState.player_loop[playerId];
-                    const playerName = newPlayerState.available_players[playerId];
+                    const playerName = newPlayerState.available_players[playerId].name;
                     console.log("Here")
                     if (playerName) {
                         document.getElementById("player-name").querySelector("div").textContent = playerName;
@@ -433,6 +429,7 @@
                         const title = playerObject.track.title;
                         const joinedNames = playerObject.track.artist?.map(obj => obj?.name).join(', ') || " ";
                         const albumName = playerObject.track.album;
+                        const caption = playerObject.track?.caption
 
                         const cover = playerObject.track.cover;
                         const mode = playerObject.mode;
@@ -459,11 +456,18 @@
                         if (title && joinedNames && cover) {
                             document.getElementById("song-title").querySelector("div").textContent = title;
                             document.getElementById("artist-name").querySelector("div").textContent = joinedNames;
-                            document.getElementById("album-name").querySelector("div").textContent = albumName;
+                            if (caption) {
+                                document.getElementById("album-name").querySelector("div").textContent = caption;
+                            } else {
+                                document.getElementById("album-name").querySelector("div").textContent = albumName;
+                            }
                             document.getElementById("album-art").src = cover;
 
                             if (format == 'mp3') {
-                                document.getElementById("bitdepth-text").querySelector("div").textContent = bitrate + ' kbps CBR';
+                                if (bitrate)
+                                    document.getElementById("bitdepth-text").querySelector("div").textContent = bitrate + ' kbps CBR';
+                                else
+                                    document.getElementById("bitdepth-text").querySelector("div").textContent = ' ';
                                 document.getElementById("bitrate-text").querySelector("div").textContent = '';
                             } else if (['flac', 'wav'].includes(format)) {
                                 document.getElementById("bitdepth-text").querySelector("div").textContent = (bitdepth || 16) + ' bit';
@@ -485,6 +489,7 @@
                         showEmptyState()
                     }
                 })
+
                 // Return the data as-is or modified for further handling
                 return loadRequestData;
             }
