@@ -496,6 +496,30 @@
         );
 
 
+        var idleTime = 0;
+        const CUSTOM_CHANNEL = 'urn:x-cast:innuos';
+
+        context.addCustomMessageListener(CUSTOM_CHANNEL, function (customEvent) {
+            var eventData = customEvent.data;
+            parseCommand(eventData);
+            idleTime = 0;
+        });
+
+
+        const options = new cast.framework.CastReceiverOptions();
+
+        options.disableIdleTimeout = true;
+
+        context.start(options);
+
+        var idleInterval = setInterval(timerIncrement, 60000); // 1 minute
+
+        function timerIncrement() {
+            idleTime = idleTime + 1;
+            if (idleTime > 4) { // 5 minutes
+                context.stop();
+            }
+        }
 
         // Start the receiver
         context.start();
