@@ -27,6 +27,7 @@
             justify-content: center;
             align-items: center;
             height: 100vh;
+            width: calc(100vw - 6em);
         }
 
         #loading,
@@ -271,6 +272,7 @@
         <div class="track-progress-and-logo">
             <div class="over-time-container">
                 <div class="quality-and-source">
+                    <img class="source-img" src="" alt="quality-logo" id="quality-logo" />
                     <img id="source-img" class="source-img" src="" alt="Source Image">
                     <div class="source-icon" id="source-icon">
                         <div></div>
@@ -412,6 +414,17 @@
             showError()
         }, 30000);
 
+        const HD_QUALITIES = [
+            'HD',
+            'DSD',
+        ]
+
+        function startsWithQuality(quality_description) {
+            return HD_QUALITIES.some(quality =>
+                quality_description.startsWith(quality)
+            );
+        }
+
         showLoading();
         const playerManager = context.getPlayerManager();
 
@@ -457,6 +470,7 @@
                         const trackLengthInSeconds = playerObject.track.length_in_seconds;
                         const source = playerObject.track.source;
                         const volume = playerObject.volume;
+                        const isHd = startsWithQuality(playerObject.track.quality_description.toUpperCase())
 
                         if (source.toUpperCase() !== 'RADIO') {
                             if (playerObject.mode == 'stop') {
@@ -499,6 +513,19 @@
                             document.getElementById("source-img").src = srcImg;
                             if (source.toUpperCase() !== 'RADIO')
                                 document.getElementById("current-track-total-time").querySelector("div").textContent = trackLength;
+
+                            if (isHd) {
+                                if (playerObject.track.quality_description.toUpperCase().startsWith('HD')) {
+                                    document.getElementById("quality-logo").src = './images/hd.svg';
+                                } else {
+                                    document.getElementById("quality-logo").src = './images/dsd.svg';
+                                }
+
+                                document.getElementById("quality-logo").style.display = 'block';
+                            } else {
+                                document.getElementById("quality-logo").src = '';
+                                document.getElementById("quality-logo").style.display = 'none';
+                            }
 
                             document.getElementById("player-volume").querySelector("div").textContent = volume;
 
