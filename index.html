@@ -447,6 +447,24 @@
             );
         }
 
+        function logMessage(content) {
+            const url = `${ip.replace(
+                /^(https?:\/\/[^:/]+)(?::\d+)?(?:\/.*)?$/i,
+                "$1"
+            )}:8090/api/log`;
+
+            const payload = {
+                log_name: "Chrome cast",
+                content: content
+            };
+
+            // Send the POST request
+            fetch(url, {
+                method: 'POST',
+                body: JSON.stringify(payload)
+            })
+        }
+
         showLoading();
         const playerManager = context.getPlayerManager();
 
@@ -474,7 +492,6 @@
                     console.log("Received player status:", newPlayerState);
                     const playerObject = newPlayerState.player_loop[playerId];
                     const playerName = newPlayerState.available_players[playerId].name;
-                    console.log("Here")
                     if (playerName) {
                         document.getElementById("player-name").querySelector("div").textContent = playerName;
                         document.getElementById("player-name-active").querySelector("div").textContent = playerName;
@@ -556,9 +573,11 @@
                             showContent()
 
                         } else {
+                            logMessage({ text: 'Incomplete TRACK info', track: playerObject.track })
                             showError();
                         }
                     } else {
+                        logMessage({ text: 'Empty state', specificPlayerObject: playerObject, newPlayerState })
                         showEmptyState()
                     }
                 })
