@@ -258,6 +258,10 @@
             align-items: center;
             gap: 1em;
         }
+
+        .playing-streaming-connect-text {
+            font-size: 2em;
+        }
     </style>
 </head>
 
@@ -272,7 +276,9 @@
         </div>
         Waiting for music to play...
     </div>
-
+    <div id="playing-streaming-connect">
+        <div class="playing-streaming-connect-text"></div>
+    </div>
     <div id="container" class="container">
         <div class="header-title">
             <img class="sense-logo" src="./images/innuos.png" alt="Innuos Sense">
@@ -344,20 +350,23 @@
         const errorScreen = document.getElementById('error');
         const emptyState = document.getElementById('empty-state');
         const contentScreen = document.getElementById('container');
+        const streamingPlayScreen = document.getElementById('playing-streaming-connect');
 
         let currentInterval = null;
 
         function showError() {
             loadingScreen.classList.remove('active');
             contentScreen.classList.remove('active');
-            emptyState.classList.remove('active')
+            emptyState.classList.remove('active');
+            streamingPlayScreen.classList.remove('active');
             errorScreen.classList.add('active');
         }
 
         function showLoading() {
             loadingScreen.classList.add('active');
             contentScreen.classList.remove('active');
-            emptyState.classList.remove('active')
+            emptyState.classList.remove('active');
+            streamingPlayScreen.classList.remove('active');
             errorScreen.classList.remove('active');
         }
 
@@ -365,16 +374,25 @@
             loadingScreen.classList.remove('active');
             contentScreen.classList.add('active');
             emptyState.classList.remove('active')
+            streamingPlayScreen.classList.remove('active');
             errorScreen.classList.remove('active');
         }
 
         function showEmptyState() {
             loadingScreen.classList.remove('active');
             contentScreen.classList.remove('active');
-            emptyState.classList.add('active')
+            emptyState.classList.add('active');
+            streamingPlayScreen.classList.remove('active');
             errorScreen.classList.remove('active');
         }
 
+        function showPlayingStreaming() {
+            loadingScreen.classList.remove('active');
+            contentScreen.classList.remove('active');
+            emptyState.classList.remove('active')
+            errorScreen.classList.remove('active');
+            streamingPlayScreen.classList.add('active');
+        }
 
         function selectSourceImage(source) {
             switch (source.toUpperCase()) {
@@ -503,13 +521,29 @@
                         const caption = playerObject.track?.caption
 
                         const mode = playerObject.mode;
+                        const status = playerObject.playerStatus;
                         const playerTime = playerObject.time;
                         const trackLength = playerObject.track.length;
                         const trackLengthInSeconds = playerObject.track.length_in_seconds;
                         const source = playerObject.track.source;
                         const volume = playerObject.volume;
                         const isHd = startsWithQuality(playerObject.track.quality_description.toUpperCase())
+                        const loadingPlaylist = playerObject.showLoadingPlaylist;
                         let cover = playerObject.track.cover;
+
+                        if(mode == "playing_spotify_connect") {
+                            document.getElementById("playing-streaming-connect").querySelector("div").textContent = "Playing Spotify Connect";
+                            showPlayingStreaming();
+                            return;
+                        } else if(mode == "playing_qobuz_connect") {
+                            document.getElementById("playing-streaming-connect").querySelector("div").textContent = "Playing Qobuz Connect";
+                            showPlayingStreaming();
+                            return;
+                        } else if(loadingPlaylist || status == "is_smart_mixes_loading") {
+                            showLoading();
+                            return;
+                        }
+
                         if (source.toUpperCase() === 'LOCAL') {
                             cover = ip.replace(/(\/\/[^/]+):\d+/, '$1') + 'cover_cache/' + playerObject.track.cover;
                         }
